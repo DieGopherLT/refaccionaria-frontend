@@ -1,10 +1,13 @@
 import React, { FC } from 'react';
 
-interface WrapperProps {}
+interface WrapperProps {
+    className?: string;
+}
 
-const Wrapper: FC<WrapperProps> = ({ children }) => {
+const Wrapper: FC<WrapperProps> = ({ children, className }) => {
+    const classes = `mx-auto w-11/12 md:container md:w-full ${className ? className : ''}`;
     return (
-        <div className="mx-auto w-11/12 md:container w-full">
+        <div className={ classes }>
             { children }
         </div>
     );
