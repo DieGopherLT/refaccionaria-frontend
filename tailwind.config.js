@@ -3,9 +3,12 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
-        gridTemplateColumns: {
-            'app': '3fr 7fr'
-        }
+      gridTemplateColumns: {
+        'app': '2fr 8fr'
+      },
+      flex: {
+        'icon': '0 0 2rem'
+      }
     },
   },
   variants: {
