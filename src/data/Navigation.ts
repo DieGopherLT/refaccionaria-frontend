@@ -9,7 +9,6 @@ import {
 
 const props = {
     color: '#ffffff',
-    size: 40
 }
 
 export const navData: NavigationItemData[] = [
