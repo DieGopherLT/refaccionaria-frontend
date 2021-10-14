@@ -9,7 +9,7 @@ import { navData } from './data/Navigation';
 function App() {
     return (
         <AppContainer>
-            <div className="h-16 bg-blue-900 md:h-full">
+            <div className="h-20 bg-blue-900 md:h-full">
                 <Wrapper className="h-full">
                     <Navigation data={ navData } />
                 </Wrapper>

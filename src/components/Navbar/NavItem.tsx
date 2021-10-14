@@ -9,10 +9,12 @@ const NavItem: FC<NavItemProps> = ({ data }) => {
     const { Icon, props, href, label } = data;
 
     return (
-        <a href={ href } className="flex items-center md:w-full md:gap-4">
-            <Icon { ...props } className="md:flex-icon" />
-            <span className="hidden text-lg text-white md:inline">{ label }</span>
-        </a>
+        <div className="md:p-2 md:transition-colors md:duration-300 md:rounded md:hover:bg-yellow-500 md:w-full">
+            <a href={ href } className="flex items-center md:gap-4">
+                <Icon { ...props } className="md:flex-icon" />
+                <span className="hidden text-lg text-white md:inline">{ label }</span>
+            </a>
+        </div>
     );
 };
 
