@@ -5,7 +5,7 @@ interface WrapperProps {
 }
 
 const Wrapper: FC<WrapperProps> = ({ children, className }) => {
-    const classes = `mx-auto w-11/12 md:container md:w-full ${className ? className : ''}`;
+    const classes = `mx-auto w-11/12 md:w-full ${className ? className : ''}`;
     return (
         <div className={ classes }>
             { children }

@@ -3,6 +3,7 @@ import React from 'react';
 import AppContainer from './components/UI/AppContainer';
 import Wrapper from './components/UI/Wrapper';
 import Navigation from './components/Navbar/Navigation';
+import Button from './components/UI/Button';
 
 import { navData } from './data/Navigation';
 
@@ -15,7 +16,61 @@ function App() {
                 </Wrapper>
             </div>
             <div className="flex-grow">
-                <h1 className="text-4xl text-red-500">Second part</h1>
+                <Wrapper className="max-w-5xl mt-5">
+                    <table className="w-full border-collapse table-fixed">
+                        <thead>
+                            <tr>
+                                <th className="p-1 border border-blue-600 md:w-9">ID</th>
+                                <th className="p-1 border border-blue-600 md:w-12">Nombre</th>
+                                <th className="p-1 border border-blue-600 md:w-32">Descripcion</th>
+                                <th className="p-1 border border-blue-600 md:w-8">Precio</th>
+                                <th className="p-1 border border-blue-600 md:w-8">Cantidad</th>
+                                <th className="p-1 border border-blue-600 md:w-28">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td className="p-1 border border-blue-600">1</td>
+                                <td className="p-1 border border-blue-600">Aceite</td>
+                                <td className="p-1 border border-blue-600">Minim dolore nostrud occaecat non consequat fugiat.</td>
+                                <td className="p-1 border border-blue-600">300</td>
+                                <td className="p-1 border border-blue-600">12</td>
+                                <td className="p-1 border border-blue-600">
+                                    <div className="flex justify-around">
+                                        <Button color='yellow' text='Editar'/>
+                                        <Button color='red' text='Borrar' />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td className="p-1 border border-blue-600">1</td>
+                                <td className="p-1 border border-blue-600">Aceite</td>
+                                <td className="p-1 border border-blue-600">Minim dolore nostrud occaecat non consequat fugiat.</td>
+                                <td className="p-1 border border-blue-600">300</td>
+                                <td className="p-1 border border-blue-600">12</td>
+                                <td className="p-1 border border-blue-600">
+                                    <div className="flex justify-around">
+                                        <Button color='yellow' text='Editar'/>
+                                        <Button color='red' text='Borrar' />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td className="p-1 border border-blue-600">1</td>
+                                <td className="p-1 border border-blue-600">Aceite</td>
+                                <td className="p-1 border border-blue-600">Minim dolore nostrud occaecat non consequat fugiat.</td>
+                                <td className="p-1 border border-blue-600">300</td>
+                                <td className="p-1 border border-blue-600">12</td>
+                                <td className="p-1 border border-blue-600">
+                                    <div className="flex justify-around">
+                                        <Button color='yellow' text='Editar'/>
+                                        <Button color='red' text='Borrar' />
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </Wrapper>
             </div>
         </AppContainer>
     );
