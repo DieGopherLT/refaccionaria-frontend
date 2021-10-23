@@ -1,32 +1,29 @@
-import React, { FC, useState, useEffect, useRef, Fragment } from 'react';
+import React, { FC } from 'react';
+
+import Wrapper from '../UI/Wrapper';
+import Row from './Row';
 
 interface TableProps {
-    data: Object;
+    data: any[];
 }
 
 const Table: FC<TableProps> = ({ children, data }) => {
-    
-    const [width, setWidth] = useState(window.innerWidth);
-    
-    useEffect(() => {
-        window.addEventListener('resize', () => {
-            setWidth(window.innerWidth);
-        })
-    }, []);
-
-    const css = `grid grid-cols-${Object.keys(data).length}`;
 
     return (
-        <Fragment>
-            { width >= 1024 && 
-                <div className={ css }>
-                    { Object.keys(data).map(key => (
-                        <p key={ key } className="text-center capitalize border border-blue-500">{ key }</p>
+        <Wrapper className="max-w-5xl mt-5 overflow-x-auto whitespace-nowrap lg:whitespace-normal">
+            <table className="w-full border-collapse lg:table-fixed">
+                <thead>
+                    <tr>
+                        { children }
+                    </tr>
+                </thead>
+                <tbody>
+                    { data.map((row, index) => (
+                        <Row key={ index } data={ row } />
                     )) }
-                </div> 
-            }
-            { children }
-        </Fragment>
+                </tbody>
+            </table>
+        </Wrapper>
     );
 };
 
