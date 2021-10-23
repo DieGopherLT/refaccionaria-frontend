@@ -3,74 +3,60 @@ import React from 'react';
 import AppContainer from './components/UI/AppContainer';
 import Wrapper from './components/UI/Wrapper';
 import Navigation from './components/Navbar/Navigation';
-import Button from './components/UI/Button';
+import Table from './components/Table/Table';
 
 import { navData } from './data/Navigation';
 
+interface Product {
+    id: number;
+    name: string;
+    desc: string;
+    price: number;
+    amount: number;
+}
+
 function App() {
+
+    const products: Product[] = [
+        {
+            id: 1,
+            name: 'Aceite',
+            desc: 'Aceite de motor',
+            price: 100,
+            amount: 20
+        },
+        {
+            id: 2,
+            name: 'bugia',
+            desc: 'reemplazo de bugia',
+            price: 50,
+            amount: 0
+        },
+        {
+            id: 3,
+            name: 'llanta',
+            desc: 'reemplazo de llanta',
+            price: 135,
+            amount: 5
+        }
+    ]
+
     return (
         <AppContainer>
-            <div className="h-20 bg-blue-900 md:h-full">
+            <div className="h-20 bg-blue-900 lg:h-full">
                 <Wrapper className="h-full">
                     <Navigation data={ navData } />
                 </Wrapper>
             </div>
             <div className="flex-grow">
-                <Wrapper className="max-w-5xl mt-5 overflow-x-auto whitespace-nowrap lg:whitespace-normal">
-                    <table className="w-full border-collapse lg:table-fixed">
-                        <thead>
-                            <tr>
-                                <th className="p-1 border border-blue-600 lg:w-9">ID</th>
-                                <th className="p-1 border border-blue-600 lg:w-12">Nombre</th>
-                                <th className="p-1 border border-blue-600 lg:w-32">Descripcion</th>
-                                <th className="p-1 border border-blue-600 lg:w-8">Precio</th>
-                                <th className="p-1 border border-blue-600 lg:w-8">Cantidad</th>
-                                <th className="p-1 border border-blue-600 lg:w-28">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td className="p-1 border border-blue-600">1</td>
-                                <td className="p-1 border border-blue-600">Aceite</td>
-                                <td className="p-1 border border-blue-600">Minim dolore nostrud occaecat non consequat fugiat.</td>
-                                <td className="p-1 border border-blue-600">300</td>
-                                <td className="p-1 border border-blue-600">12</td>
-                                <td className="p-1 border border-blue-600">
-                                    <div className="flex justify-around gap-2 lg:gap-0">
-                                        <Button color='yellow' text='Editar'/>
-                                        <Button color='red' text='Borrar' />
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="p-1 border border-blue-600">1</td>
-                                <td className="p-1 border border-blue-600">Aceite</td>
-                                <td className="p-1 border border-blue-600">Minim dolore nostrud occaecat non consequat fugiat.</td>
-                                <td className="p-1 border border-blue-600">300</td>
-                                <td className="p-1 border border-blue-600">12</td>
-                                <td className="p-1 border border-blue-600">
-                                    <div className="flex justify-around gap-2 lg:gap-0">
-                                        <Button color='yellow' text='Editar'/>
-                                        <Button color='red' text='Borrar' />
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="p-1 border border-blue-600">1</td>
-                                <td className="p-1 border border-blue-600">Aceite</td>
-                                <td className="p-1 border border-blue-600">Minim dolore nostrud occaecat non consequat fugiat.</td>
-                                <td className="p-1 border border-blue-600">300</td>
-                                <td className="p-1 border border-blue-600">12</td>
-                                <td className="p-1 border border-blue-600">
-                                    <div className="flex justify-around gap-2 lg:gap-0">
-                                        <Button color='yellow' text='Editar'/>
-                                        <Button color='red' text='Borrar' />
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </Wrapper>
+                <Table data={ products }>
+                    <th className="p-1 border border-blue-600 lg:w-9">ID</th>
+                    <th className="p-1 border border-blue-600 lg:w-12">Nombre</th>
+                    <th className="p-1 border border-blue-600 lg:w-32">Descripcion</th>
+                    <th className="p-1 border border-blue-600 lg:w-8">Precio</th>
+                    <th className="p-1 border border-blue-600 lg:w-8">Cantidad</th>
+                    <th className="p-1 border border-blue-600 lg:w-28">Acciones</th>
+                </Table>
             </div>
         </AppContainer>
     );
