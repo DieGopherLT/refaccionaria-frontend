@@ -16,16 +16,16 @@ function App() {
                 </Wrapper>
             </div>
             <div className="flex-grow">
-                <Wrapper className="max-w-5xl mt-5">
-                    <table className="w-full border-collapse table-fixed">
+                <Wrapper className="max-w-5xl mt-5 overflow-x-auto whitespace-nowrap lg:whitespace-normal">
+                    <table className="w-full border-collapse lg:table-fixed">
                         <thead>
                             <tr>
-                                <th className="p-1 border border-blue-600 md:w-9">ID</th>
-                                <th className="p-1 border border-blue-600 md:w-12">Nombre</th>
-                                <th className="p-1 border border-blue-600 md:w-32">Descripcion</th>
-                                <th className="p-1 border border-blue-600 md:w-8">Precio</th>
-                                <th className="p-1 border border-blue-600 md:w-8">Cantidad</th>
-                                <th className="p-1 border border-blue-600 md:w-28">Acciones</th>
+                                <th className="p-1 border border-blue-600 lg:w-9">ID</th>
+                                <th className="p-1 border border-blue-600 lg:w-12">Nombre</th>
+                                <th className="p-1 border border-blue-600 lg:w-32">Descripcion</th>
+                                <th className="p-1 border border-blue-600 lg:w-8">Precio</th>
+                                <th className="p-1 border border-blue-600 lg:w-8">Cantidad</th>
+                                <th className="p-1 border border-blue-600 lg:w-28">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -36,7 +36,7 @@ function App() {
                                 <td className="p-1 border border-blue-600">300</td>
                                 <td className="p-1 border border-blue-600">12</td>
                                 <td className="p-1 border border-blue-600">
-                                    <div className="flex justify-around">
+                                    <div className="flex justify-around gap-2 lg:gap-0">
                                         <Button color='yellow' text='Editar'/>
                                         <Button color='red' text='Borrar' />
                                     </div>
@@ -49,7 +49,7 @@ function App() {
                                 <td className="p-1 border border-blue-600">300</td>
                                 <td className="p-1 border border-blue-600">12</td>
                                 <td className="p-1 border border-blue-600">
-                                    <div className="flex justify-around">
+                                    <div className="flex justify-around gap-2 lg:gap-0">
                                         <Button color='yellow' text='Editar'/>
                                         <Button color='red' text='Borrar' />
                                     </div>
@@ -62,7 +62,7 @@ function App() {
                                 <td className="p-1 border border-blue-600">300</td>
                                 <td className="p-1 border border-blue-600">12</td>
                                 <td className="p-1 border border-blue-600">
-                                    <div className="flex justify-around">
+                                    <div className="flex justify-around gap-2 lg:gap-0">
                                         <Button color='yellow' text='Editar'/>
                                         <Button color='red' text='Borrar' />
                                     </div>
