@@ -10,7 +10,7 @@ interface TableProps {
 const Table: FC<TableProps> = ({ children, data }) => {
 
     return (
-        <Wrapper className="max-w-5xl mt-5 overflow-x-auto whitespace-nowrap lg:whitespace-normal">
+        <Wrapper className="max-w-5xl mt-5 overflow-x-auto whitespace-nowrap md:whitespace-normal">
             <table className="w-full border-collapse lg:table-fixed">
                 <thead>
                     <tr>
