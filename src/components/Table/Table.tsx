@@ -7,6 +7,7 @@ interface TableProps {
     data: any[];
 }
 
+// Note: Actions heading tends to have a w-28 class
 const Table: FC<TableProps> = ({ children, data }) => {
 
     return (
