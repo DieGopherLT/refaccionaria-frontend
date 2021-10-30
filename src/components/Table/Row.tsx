@@ -15,8 +15,12 @@ const Row: FC<RowProps> = ({ data }) => {
             )) }
             <td className="p-1 border border-blue-600">
                 <div className="flex justify-around gap-2 lg:gap-0">
-                    <Button color='yellow' text='Editar'/>
-                    <Button color='red' text='Borrar' />
+                    <div className="w-full md:w-28">
+                        <Button color="yellow" type="button" text="Editar"/>
+                    </div>
+                    <div className="w-full md:w-28">
+                        <Button color="red" type="button" text="Borrar"/>
+                    </div>
                 </div>
             </td>
         </tr>
