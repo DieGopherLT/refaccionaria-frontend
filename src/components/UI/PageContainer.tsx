@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 
 const PageContainer: FC = props => (
-    <div className="flex-row">
+    <div className="flex-grow">
         { props.children }
     </div>
 );
