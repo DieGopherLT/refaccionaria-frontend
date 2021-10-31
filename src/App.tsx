@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import AppContainer from './components/UI/AppContainer';
 import Home from './pages/Home';
 import Products from './pages/Products';
+import ProductForm from './pages/Forms/ProductForm';
 import Providers from './pages/Providers';
 import Deliveries from './pages/Deliveries';
 
@@ -27,7 +28,7 @@ function App() {
                     <Route exact path="/" component={ Home } />
 
                     <Route exact path="/productos" component={ Products } />
-                    <Route exact path="/productos/crear" component={ () => <h1>Form</h1> } />
+                    <Route exact path="/productos/nuevo" component={ ProductForm } />
 
                     <Route exact path="/proveedores" component={ Providers } />
                     <Route exact path="/proveedores/nuevo" component={ () => <h1>Form</h1> } />
