@@ -1,11 +1,24 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
+import DataContext from '../context/DataContext';
+
 import Wrapper from '../components/UI/Wrapper';
-import Table from '../components/Table/Table';
 import PageContainer from '../components/UI/PageContainer';
+import Button from '../components/UI/Button';
 
 const Providers = () => {
+
+    const { providers, fetchProviders } = useContext(DataContext);
+
+    useEffect(() => {
+        const fetching = async () => {
+            await fetchProviders();
+        }
+        fetching();
+    }, []);
+
+
     return (
         <PageContainer>
             <Wrapper className="max-w-5xl mt-5">
@@ -14,14 +27,41 @@ const Providers = () => {
                     className="text-white text-center bg-green-500 hover:bg-green-700 p-3 rounded block w-full lg:w-52"
                 >Agregar proveedor nuevo</Link>
             </Wrapper>
-            <Table data={ [] }>
-                <th className="p-1 border border-blue-600 lg:w-9">ID</th>
-                <th className="p-1 border border-blue-600 lg:w-12">Nombre</th>
-                <th className="p-1 border border-blue-600 lg:w-32">Descripcion</th>
-                <th className="p-1 border border-blue-600 lg:w-8">Precio</th>
-                <th className="p-1 border border-blue-600 lg:w-8">Cantidad</th>
-                <th className="p-1 border border-blue-600 lg:w-28">Acciones</th>
-            </Table>
+            <Wrapper className="max-w-5xl mt-5 overflow-x-auto whitespace-nowrap md:whitespace-normal">
+                <table className="w-full border-collapse lg:table-fixed">
+                    <thead>
+                        <tr>
+                            <th className="p-1 border border-blue-600 lg:w-9">ID</th>
+                            <th className="p-1 border border-blue-600 lg:w-12">Nombre</th>
+                            <th className="p-1 border border-blue-600 lg:w-12">Correo</th>
+                            <th className="p-1 border border-blue-600 lg:w-12">Teléfono</th>
+                            <th className="p-1 border border-blue-600 lg:w-12">Empresa</th>
+                            <th className="p-1 border border-blue-600 lg:w-28">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        { providers.map((provider, index) => (
+                            <tr key={ index + provider.provider_id }>
+                                <td className="p-1 border border-blue-600">{ provider.provider_id }</td>
+                                <td className="p-1 border border-blue-600">{ provider.name }</td>
+                                <td className="p-1 border border-blue-600">{ provider.email }</td>
+                                <td className="p-1 border border-blue-600">{ provider.phone }</td>
+                                <td className="p-1 border border-blue-600">{ provider.enterprise }</td>
+                                <td className="p-1 border border-blue-600">
+                                    <div className="flex justify-around gap-2 lg:gap-0">
+                                        <div className="w-full md:w-28">
+                                            <Button color="yellow" type="button" text="Editar"/>
+                                        </div>
+                                        <div className="w-full md:w-28">
+                                            <Button color="red" type="button" text="Borrar"/>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        )) }
+                    </tbody>
+                </table>
+            </Wrapper>
         </PageContainer>
     );
 };
