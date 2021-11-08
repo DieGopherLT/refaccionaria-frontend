@@ -4,13 +4,14 @@ import axios from 'axios';
 import DataContext from './DataContext';
 import DataReducer, { DataReducerState } from './DataReducer';
 
-import { ProductGetResponse, ProviderGetResponse } from '../types/Api';
+import { GenericResponse, ProductGetResponse, ProviderDTO, ProviderGetResponse } from '../types/Api';
 
 const DataState: FC = ({ children }) => {
 
     const initialState: DataReducerState = {
         products: [],
-        providers: []
+        providers: [],
+        response: null
     }
 
     const [state, dispatch] = useReducer(DataReducer, initialState);
@@ -39,13 +40,32 @@ const DataState: FC = ({ children }) => {
         }
     }
 
+    const postProvider = async (provider: ProviderDTO) => {
+        try {
+            const jsonInfo = JSON.stringify(provider);
+            const info = await axios.post<GenericResponse>('http://localhost:4000/api/v1/provider', jsonInfo, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            dispatch({
+                type: 'SET_RESPONSE',
+                payload: info.data
+            })
+        } catch(e) {
+            console.log(e);
+        }
+    }
+
     return (
         <DataContext.Provider
             value={{
                 products: state.products,
                 providers: state.providers,
+                response: state.response,
                 fetchProducts,
                 fetchProviders,
+                postProvider,
             }}
         >
             { children }

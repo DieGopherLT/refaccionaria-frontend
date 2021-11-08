@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Products from './pages/Products';
 import ProductForm from './pages/Forms/ProductForm';
 import Providers from './pages/Providers';
+import ProviderForm from './pages/Forms/ProviderForm';
 import Deliveries from './pages/Deliveries';
 
 import DataState from './context/DataState';
@@ -33,7 +34,7 @@ function App() {
                         <Route exact path="/productos/nuevo" component={ ProductForm }/>
 
                         <Route exact path="/proveedores" component={ Providers }/>
-                        <Route exact path="/proveedores/nuevo" component={ () => <h1>Form</h1> }/>
+                        <Route exact path="/proveedores/nuevo" component={ ProviderForm }/>
 
                         <Route exact path="/entregas" component={ Deliveries }/>
                         <Route exact path="/entregas/nuevo" component={ () => <h1>Form</h1> }/>

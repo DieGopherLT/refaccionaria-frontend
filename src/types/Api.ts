@@ -8,6 +8,11 @@ export interface ProviderGetResponse {
     providers: Provider[];
 }
 
+export interface GenericResponse {
+    message: string;
+    error: boolean;
+}
+
 export interface Product {
     product_id: number;
     name: string;
@@ -24,10 +29,13 @@ export interface Category {
     name: string;
 }
 
-export interface Provider {
-    provider_id: number;
+export interface ProviderDTO {
     email: string;
     name: string;
     phone: string;
-    enterprise?: string;
+    enterprise: string;
+}
+
+export interface Provider extends ProviderDTO{
+    provider_id: number;
 }

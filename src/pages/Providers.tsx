@@ -16,7 +16,7 @@ const Providers = () => {
             await fetchProviders();
         }
         fetching();
-    }, []);
+    }, [fetchProviders]);
 
 
     return (
