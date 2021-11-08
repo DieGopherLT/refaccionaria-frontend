@@ -1,9 +1,11 @@
 import React, { FC } from 'react';
 
+import { Option } from '../../types/Form';
+
 interface SelectProps {
-    options: string[];
+    options: Option[];
     label: string;
-    value: string;
+    value: string | number;
     onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
@@ -21,9 +23,9 @@ const Select: FC<SelectProps> = ({ options, label, value, onChange }) => {
                 { options.map((option, index) => (
                     <option
                         key={ `${option}-${index}` }
-                        value={ option }
+                        value={ option.value }
                         className="capitalize"
-                    >{ option }</option>
+                    >{ option.label }</option>
                 )) }
             </select>
         </div>
