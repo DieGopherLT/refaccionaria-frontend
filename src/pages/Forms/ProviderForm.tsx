@@ -33,7 +33,7 @@ const ProviderForm: FC<RouteComponentProps> = props => {
         <PageContainer>
             <Wrapper className="max-w-3xl mt-10">
                 <Form onSubmit={ onSubmit }>
-                    <h2 className="text-center text-2xl font-bold">Nuevo Producto</h2>
+                    <h2 className="text-center text-2xl font-bold">Nuevo Proveedor</h2>
                     <Input
                         type="text"
                         label="Nombre"
