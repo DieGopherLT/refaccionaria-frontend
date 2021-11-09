@@ -7,11 +7,13 @@ import Wrapper from '../components/UI/Wrapper';
 import ProductContext from '../context/Product/ProductContext';
 import Button from '../components/UI/Button';
 
+import { Product } from '../types/Api';
+
 interface ProductsProps extends RouteComponentProps{}
 
-const Products: FC<ProductsProps> = () => {
+const Products: FC<ProductsProps> = props => {
 
-    const { products, fetchProducts, deleteProduct } = useContext(ProductContext);
+    const { products, fetchProducts, setEditingProduct, deleteProduct } = useContext(ProductContext);
 
     useEffect(() => {
         const fetching = async () => {
@@ -22,6 +24,11 @@ const Products: FC<ProductsProps> = () => {
 
     const deleteProductRequest = async (id: number) => {
         await deleteProduct(id);
+    }
+
+    const editProduct = (product: Product) => {
+        setEditingProduct(product);
+        props.history.push('/productos/nuevo');
     }
 
     return (
@@ -55,7 +62,12 @@ const Products: FC<ProductsProps> = () => {
                                 <td className="p-1 border border-blue-600">
                                     <div className="flex justify-around gap-2 lg:gap-0">
                                         <div className="w-full md:w-28">
-                                            <Button color="yellow" type="button" text="Editar"/>
+                                            <Button
+                                                color="yellow"
+                                                type="button"
+                                                text="Editar"
+                                                onClick={ () => editProduct(product) }
+                                            />
                                         </div>
                                         <div className="w-full md:w-28">
                                             <Button

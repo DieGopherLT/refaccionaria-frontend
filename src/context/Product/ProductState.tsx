@@ -4,7 +4,14 @@ import AxiosClient from '../../config/axios';
 import ProductContext from './ProductContext';
 import DataReducer, { ProductReducerState } from './ProductReducer';
 
-import { BrandResponse, CategoryResponse, GenericResponse, ProductDTO, ProductGetResponse } from '../../types/Api';
+import {
+    BrandResponse,
+    CategoryResponse,
+    GenericResponse,
+    Product,
+    ProductDTO,
+    ProductGetResponse,
+} from '../../types/Api';
 
 const ProductState: FC = ({ children }) => {
 
@@ -12,6 +19,7 @@ const ProductState: FC = ({ children }) => {
         products: [],
         brands: [],
         categories: [],
+        editingProduct: null,
         response: null
     }
 
@@ -46,12 +54,35 @@ const ProductState: FC = ({ children }) => {
 
     const postProduct = async (product: ProductDTO) => {
         try {
-            const jsonInfo = JSON.stringify(product);
-            await AxiosClient.post<GenericResponse>('/product', jsonInfo, {
+            await AxiosClient.post<GenericResponse>('/product', product, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
+        } catch(e: any) {
+            console.log(e.response);
+        }
+    }
+
+    const setEditingProduct = (product: Product | null) => {
+        dispatch({ type: 'SET_EDITING_PRODUCT', payload: product });
+    }
+
+    const updateProduct = async (product: Product, productDto: ProductDTO) => {
+        product.name = productDto.name;
+        product.brand = productDto.brand;
+        product.price = productDto.price;
+        product.amount = productDto.amount;
+        product.description = productDto.description;
+        product.category.category_id = productDto.category_id;
+        product.provider.provider_id = productDto.provider_id;
+        try {
+            await AxiosClient.put<GenericResponse>(`/product?id=${product.product_id}`, productDto, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            dispatch({ type: 'UPDATE_PRODUCT', payload: product });
         } catch(e: any) {
             console.log(e.response);
         }
@@ -73,8 +104,11 @@ const ProductState: FC = ({ children }) => {
                 brands: state.brands,
                 categories: state.categories,
                 response: state.response,
+                editingProduct: state.editingProduct,
                 fetchProducts,
                 postProduct,
+                setEditingProduct,
+                updateProduct,
                 deleteProduct
             }}
         >

@@ -1,4 +1,4 @@
-import React, { FC, useContext, useMemo, FormEvent } from 'react';
+import React, { FC, useEffect, useContext, useMemo, FormEvent } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
 import useForm from '../../hooks/useForm';
@@ -18,18 +18,28 @@ import { ProductDTO } from '../../types/Api';
 
 const ProductForm: FC<RouteComponentProps> = props => {
 
-    const { brands, categories, postProduct } = useContext(ProductContext);
+    const {
+        editingProduct, brands, categories, postProduct, setEditingProduct, updateProduct
+    } = useContext(ProductContext);
     const { providers } = useContext(ProviderContext);
 
     const { formData, handleChange } = useForm<ProductDTO>({
-        name: '',
-        brand: '',
-        price: 0,
-        amount: 0,
-        description: '',
-        category_id: 0,
-        provider_id: 0,
+        name: editingProduct?.name || '',
+        brand: editingProduct?.brand || '',
+        price: editingProduct?.price || 0,
+        amount: editingProduct?.amount || 0,
+        description: editingProduct?.description || '',
+        category_id: editingProduct?.category.category_id || 0,
+        provider_id: editingProduct?.provider.provider_id || 0,
     });
+
+    useEffect(() => {
+        return () => {
+            if (editingProduct !== null)
+                setEditingProduct(null);
+        };
+    }, []);
+
 
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -37,8 +47,14 @@ const ProductForm: FC<RouteComponentProps> = props => {
         formData.amount = parseInt(formData.amount.toString());
         formData.category_id = parseInt(formData.category_id.toString());
         formData.provider_id = parseInt(formData.provider_id.toString());
-        postProduct(formData)
-            .then(() => props.history.push('/productos'));
+
+        if (editingProduct === null) {
+            postProduct(formData)
+                .then(() => props.history.push('/productos'));
+        } else {
+            updateProduct(editingProduct, formData)
+                .then(() => props.history.push('/productos'));
+        }
     }
 
     const brandOptions: Option[] = brands.map(brand => {
@@ -66,7 +82,9 @@ const ProductForm: FC<RouteComponentProps> = props => {
         <PageContainer>
             <Wrapper className="max-w-3xl mt-10">
                 <Form onSubmit={ onSubmit }>
-                    <h2 className="text-center text-2xl font-bold">Nuevo Producto</h2>
+                    <h2 className="text-center text-2xl font-bold">
+                        { editingProduct ? 'Modificar' : 'Nuevo Producto' }
+                    </h2>
                     <Input
                         type="text"
                         label="Nombre"
@@ -124,7 +142,7 @@ const ProductForm: FC<RouteComponentProps> = props => {
                             className="md:w-44"
                             color="blue"
                             type="submit"
-                            text="Agregar producto"
+                            text={ editingProduct ? 'Guardar cambios' : 'Agregar producto' }
                         />
                     </div>
                 </Form>
