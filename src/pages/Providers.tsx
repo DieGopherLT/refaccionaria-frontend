@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useContext } from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 
-import DataContext from '../context/Data/DataContext';
+import ProviderContext from '../context/Provider/ProviderContext';
 
 import Wrapper from '../components/UI/Wrapper';
 import PageContainer from '../components/UI/PageContainer';
@@ -11,7 +11,7 @@ import { Provider } from '../types/Api';
 
 const Providers: FC<RouteComponentProps> = props => {
 
-    const { providers, fetchProviders, setEditingProvider, deleteProvider } = useContext(DataContext);
+    const { providers, fetchProviders, setEditingProvider, deleteProvider } = useContext(ProviderContext);
 
     useEffect(() => {
         const fetching = async () => {
