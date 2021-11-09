@@ -15,26 +15,36 @@ import { ProviderDTO } from '../../types/Api';
 
 const ProviderForm: FC<RouteComponentProps> = props => {
 
-    const { fetchProviders, postProvider } = useContext(DataContext);
+    const { editingProvider, fetchProviders, postProvider, setEditingProvider, editProvider } = useContext(DataContext);
     const { formData, handleChange } = useForm<ProviderDTO>({
-        name: '',
-        email: '',
-        phone: '',
-        enterprise: '',
+        name: editingProvider?.name || '',
+        email: editingProvider?.email || '',
+        phone: editingProvider?.phone || '',
+        enterprise: editingProvider?.enterprise || '',
     });
 
     const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        postProvider(formData)
-            .then(() => fetchProviders())
-            .then(() => props.history.push('/proveedores'))
+        if (editingProvider === null) {
+            postProvider(formData)
+                .then(() => fetchProviders())
+                .then(() => props.history.push('/proveedores'));
+        } else {
+            editProvider({ ...formData, provider_id: editingProvider.provider_id })
+                .then(() => {
+                    setEditingProvider(null);
+                    props.history.push('/proveedores');
+                })
+        }
     }
 
     return (
         <PageContainer>
             <Wrapper className="max-w-3xl mt-10">
                 <Form onSubmit={ onSubmit }>
-                    <h2 className="text-center text-2xl font-bold">Nuevo Proveedor</h2>
+                    <h2 className="text-center text-2xl font-bold">
+                        { editingProvider ? 'Modificar proveedor' : 'Nuevo Proveedor' }
+                    </h2>
                     <Input
                         type="text"
                         label="Nombre"
@@ -72,7 +82,7 @@ const ProviderForm: FC<RouteComponentProps> = props => {
                             className="md:w-44"
                             color="blue"
                             type="submit"
-                            text="Agregar producto"
+                            text={ editingProvider ? 'Guardar cambios' : 'Agregar producto' }
                         />
                     </div>
                 </Form>

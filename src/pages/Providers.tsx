@@ -7,9 +7,11 @@ import Wrapper from '../components/UI/Wrapper';
 import PageContainer from '../components/UI/PageContainer';
 import Button from '../components/UI/Button';
 
+import { Provider } from '../types/Api';
+
 const Providers: FC<RouteComponentProps> = props => {
 
-    const { providers, fetchProviders, deleteProvider } = useContext(DataContext);
+    const { providers, fetchProviders, setEditingProvider, deleteProvider } = useContext(DataContext);
 
     useEffect(() => {
         const fetching = async () => {
@@ -17,6 +19,11 @@ const Providers: FC<RouteComponentProps> = props => {
         }
         fetching();
     }, []);
+
+    const editP = (provider: Provider) => {
+        setEditingProvider(provider);
+        props.history.push('/proveedores/nuevo');
+    }
 
     const deleteP = async (id: number) => {
         await deleteProvider(id);
@@ -57,6 +64,7 @@ const Providers: FC<RouteComponentProps> = props => {
                                                 color="yellow"
                                                 type="button"
                                                 text="Editar"
+                                                onClick={ () => editP(provider) }
                                             />
                                         </div>
                                         <div className="w-full md:w-28">

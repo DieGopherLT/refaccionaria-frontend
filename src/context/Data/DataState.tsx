@@ -4,13 +4,14 @@ import axios from 'axios';
 import DataContext from './DataContext';
 import DataReducer, { DataReducerState } from './DataReducer';
 
-import { GenericResponse, ProductGetResponse, ProviderDTO, ProviderGetResponse } from '../../types/Api';
+import { GenericResponse, ProductGetResponse, Provider, ProviderDTO, ProviderGetResponse } from '../../types/Api';
 
 const DataState: FC = ({ children }) => {
 
     const initialState: DataReducerState = {
         products: [],
         providers: [],
+        editingProvider: null,
         response: null
     }
 
@@ -57,6 +58,26 @@ const DataState: FC = ({ children }) => {
         }
     }
 
+    const setEditingProvider = (payload: Provider | null) => {
+        dispatch({
+            type: 'SET_EDITING_PROVIDER',
+            payload
+        })
+    }
+
+    const editProvider = async (provider: Provider) => {
+        try {
+            const jsonInfo = JSON.stringify(provider);
+            await axios.put<GenericResponse>(`http://localhost:4000/api/v1/provider?id=${provider.provider_id}`, jsonInfo);
+            dispatch({
+                type: 'UPDATE_PROVIDER',
+                payload: provider
+            })
+        } catch(e: any) {
+            console.log(e.response);
+        }
+    }
+
     const deleteProvider = async (id: number) => {
         try {
             const info = await axios.delete<GenericResponse>(`http://localhost:4000/api/v1/provider?id=${id}`);
@@ -77,10 +98,13 @@ const DataState: FC = ({ children }) => {
             value={{
                 products: state.products,
                 providers: state.providers,
+                editingProvider: state.editingProvider,
                 response: state.response,
                 fetchProducts,
                 fetchProviders,
                 postProvider,
+                setEditingProvider,
+                editProvider,
                 deleteProvider,
             }}
         >
