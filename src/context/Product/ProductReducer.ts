@@ -1,12 +1,15 @@
-import { GenericResponse, Product } from '../../types/Api';
+import { Category, GenericResponse, Product } from '../../types/Api';
 
 export type ProductReducerState = {
     products: Product[],
-    response: GenericResponse | null;
+    brands: string[],
+    categories: Category[]
+    response: GenericResponse | null,
 }
 
 type ProductAction =
     | { type: 'SET_PRODUCTS', payload: Product[] }
+    | { type: 'SET_BRANDS_CATEGORIES', payload: { brands: string[], categories: Category[] } }
 
 export default function reducer(state: ProductReducerState, action: ProductAction): ProductReducerState {
     switch(action.type) {
@@ -14,6 +17,12 @@ export default function reducer(state: ProductReducerState, action: ProductActio
             return {
                 ...state,
                 products: action.payload,
+            }
+        case 'SET_BRANDS_CATEGORIES':
+            return {
+                ...state,
+                brands: action.payload.brands,
+                categories: action.payload.categories
             }
         default:
             return {

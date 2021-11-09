@@ -13,6 +13,26 @@ export interface GenericResponse {
     error: boolean;
 }
 
+export interface BrandResponse {
+    brands: string[];
+    error: false;
+}
+
+export interface CategoryResponse {
+    categories: Category[]
+    error: boolean;
+}
+
+export interface ProductDTO {
+    name: string;
+    brand: string;
+    price: number;
+    amount: number;
+    description: string;
+    category_id: number;
+    provider_id: number;
+}
+
 export interface Product {
     product_id: number;
     name: string;

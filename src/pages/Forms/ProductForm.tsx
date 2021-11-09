@@ -1,24 +1,66 @@
-import React from 'react';
+import React, { FC, useContext, useMemo, FormEvent } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 
 import useForm from '../../hooks/useForm';
+
+import ProductContext from '../../context/Product/ProductContext';
+import ProviderContext from '../../context/Provider/ProviderContext';
 
 import PageContainer from '../../components/UI/PageContainer';
 import Wrapper from '../../components/UI/Wrapper';
 import Form from '../../components/Form/Form';
 import Input from '../../components/Form/Input';
+import Select from '../../components/Form/Select';
 import Button from '../../components/UI/Button';
 
-const ProductForm = () => {
+import { Option } from '../../types/Form';
+import { ProductDTO } from '../../types/Api';
 
-    const { formData, handleChange } = useForm({
+const ProductForm: FC<RouteComponentProps> = props => {
+
+    const { brands, categories, postProduct } = useContext(ProductContext);
+    const { providers } = useContext(ProviderContext);
+
+    const { formData, handleChange } = useForm<ProductDTO>({
         name: '',
+        brand: '',
         price: 0,
-        description: ''
-    })
+        amount: 0,
+        description: '',
+        category_id: 0,
+        provider_id: 0,
+    });
 
-    const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        formData.price = parseFloat(formData.price.toString());
+        formData.amount = parseInt(formData.amount.toString());
+        formData.category_id = parseInt(formData.category_id.toString());
+        formData.provider_id = parseInt(formData.provider_id.toString());
+        postProduct(formData)
+            .then(() => props.history.push('/productos'));
     }
+
+    const brandOptions: Option[] = brands.map(brand => {
+        const opt: Option = {
+            value: brand,
+            label: brand,
+        };
+        return opt;
+    });
+
+    const providerOptions: Option[] = providers.filter(({ enterprise }) => enterprise.toLowerCase() === formData.brand.toLowerCase())
+        .map(provider => {
+            let opt: Option = { value: provider.provider_id, label: provider.name };
+            return opt;
+        });
+
+    const categoryOptions: Option[] = useMemo(() => {
+        return categories.map(category => {
+            let opt: Option = { value: category.category_id, label: category.name };
+            return opt;
+        });
+    }, []);
 
     return (
         <PageContainer>
@@ -33,6 +75,26 @@ const ProductForm = () => {
                         value={ formData.name }
                         onChange={ event => handleChange(event, 'name') }
                     />
+                    <Select
+                        label="Categoria"
+                        options={ categoryOptions }
+                        value={ formData.category_id }
+                        onChange={ event => handleChange(event, 'category_id') }
+                    />
+                    <div className="flex flex-col justify-between md:flex-row">
+                        <Select
+                            label="Marca"
+                            options={ brandOptions }
+                            value={ formData.brand }
+                            onChange={ event => handleChange(event, 'brand') }
+                        />
+                        <Select
+                            label="Proveedor"
+                            options={ providerOptions }
+                            value={ formData.provider_id }
+                            onChange={ event => handleChange(event, 'provider_id') }
+                        />
+                    </div>
                     <Input
                         type="number"
                         label="Precio"
@@ -40,6 +102,14 @@ const ProductForm = () => {
                         placeholder="Precio del producto"
                         value={ formData.price.toString() }
                         onChange={ event => handleChange(event, 'price') }
+                    />
+                    <Input
+                        type="number"
+                        label="Cantidad"
+                        id="amount"
+                        placeholder="Cantidad inicial del producto, por defecto es cero"
+                        value={ formData.amount.toString() }
+                        onChange={ event => handleChange(event, 'amount') }
                     />
                     <textarea
                         name="description"
