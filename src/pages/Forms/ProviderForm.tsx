@@ -1,4 +1,4 @@
-import React, { FC, useContext } from 'react';
+import React, { FC, useEffect, useContext } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
 import useForm from '../../hooks/useForm';
@@ -25,6 +25,14 @@ const ProviderForm: FC<RouteComponentProps> = props => {
         phone: editingProvider?.phone || '',
         enterprise: editingProvider?.enterprise || '',
     });
+
+    useEffect(() => {
+        return () => {
+            if (editingProvider !== null)
+                setEditingProvider(null);
+        };
+    }, []);
+
 
     const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
