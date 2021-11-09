@@ -1,23 +1,26 @@
-import React, { useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, { FC, useEffect, useContext } from 'react';
+import { Link, RouteComponentProps } from 'react-router-dom';
 
-import DataContext from '../context/DataContext';
+import DataContext from '../context/Data/DataContext';
 
 import Wrapper from '../components/UI/Wrapper';
 import PageContainer from '../components/UI/PageContainer';
 import Button from '../components/UI/Button';
 
-const Providers = () => {
+const Providers: FC<RouteComponentProps> = props => {
 
-    const { providers, fetchProviders } = useContext(DataContext);
+    const { providers, fetchProviders, deleteProvider } = useContext(DataContext);
 
     useEffect(() => {
         const fetching = async () => {
             await fetchProviders();
         }
         fetching();
-    }, [fetchProviders]);
+    }, []);
 
+    const deleteP = async (id: number) => {
+        await deleteProvider(id);
+    }
 
     return (
         <PageContainer>
@@ -31,9 +34,9 @@ const Providers = () => {
                 <table className="w-full border-collapse lg:table-fixed">
                     <thead>
                         <tr>
-                            <th className="p-1 border border-blue-600 lg:w-9">ID</th>
-                            <th className="p-1 border border-blue-600 lg:w-12">Nombre</th>
-                            <th className="p-1 border border-blue-600 lg:w-12">Correo</th>
+                            <th className="p-1 border border-blue-600 lg:w-3">ID</th>
+                            <th className="p-1 border border-blue-600 lg:w-16">Nombre</th>
+                            <th className="p-1 border border-blue-600 lg:w-24">Correo</th>
                             <th className="p-1 border border-blue-600 lg:w-12">Teléfono</th>
                             <th className="p-1 border border-blue-600 lg:w-12">Empresa</th>
                             <th className="p-1 border border-blue-600 lg:w-28">Acciones</th>
@@ -50,10 +53,19 @@ const Providers = () => {
                                 <td className="p-1 border border-blue-600">
                                     <div className="flex justify-around gap-2 lg:gap-0">
                                         <div className="w-full md:w-28">
-                                            <Button color="yellow" type="button" text="Editar"/>
+                                            <Button
+                                                color="yellow"
+                                                type="button"
+                                                text="Editar"
+                                            />
                                         </div>
                                         <div className="w-full md:w-28">
-                                            <Button color="red" type="button" text="Borrar"/>
+                                            <Button
+                                                color="red"
+                                                type="button"
+                                                text="Borrar"
+                                                onClick={ () => deleteP(provider.provider_id) }
+                                            />
                                         </div>
                                     </div>
                                 </td>

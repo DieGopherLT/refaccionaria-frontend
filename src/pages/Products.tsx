@@ -4,7 +4,7 @@ import { RouteComponentProps, Link } from 'react-router-dom';
 import PageContainer from '../components/UI/PageContainer';
 import Wrapper from '../components/UI/Wrapper';
 
-import DataContext from '../context/DataContext';
+import DataContext from '../context/Data/DataContext';
 import Button from '../components/UI/Button';
 
 interface ProductsProps extends RouteComponentProps{}

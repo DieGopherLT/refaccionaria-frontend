@@ -1,11 +1,12 @@
 import { createContext } from 'react';
 import { DataReducerState } from './DataReducer';
-import { ProviderDTO } from '../types/Api';
+import { ProviderDTO } from '../../types/Api';
 
 interface DataContextProps extends DataReducerState {
     fetchProducts: () => Promise<void>;
     fetchProviders: () => Promise<void>;
     postProvider: (provider: ProviderDTO) => Promise<void>;
+    deleteProvider: (id: number) => Promise<void>;
 }
 
 const DataContext = createContext<DataContextProps>({} as DataContextProps);

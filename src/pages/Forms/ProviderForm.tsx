@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import useForm from '../../hooks/useForm';
 
-import DataContext from '../../context/DataContext';
+import DataContext from '../../context/Data/DataContext';
 
 import PageContainer from '../../components/UI/PageContainer';
 import Wrapper from '../../components/UI/Wrapper';
@@ -15,7 +15,7 @@ import { ProviderDTO } from '../../types/Api';
 
 const ProviderForm: FC<RouteComponentProps> = props => {
 
-    const { postProvider } = useContext(DataContext);
+    const { fetchProviders, postProvider } = useContext(DataContext);
     const { formData, handleChange } = useForm<ProviderDTO>({
         name: '',
         email: '',
@@ -25,8 +25,9 @@ const ProviderForm: FC<RouteComponentProps> = props => {
 
     const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        postProvider(formData);
-        props.history.push('/proveedores');
+        postProvider(formData)
+            .then(() => fetchProviders())
+            .then(() => props.history.push('/proveedores'))
     }
 
     return (

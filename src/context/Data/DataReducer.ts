@@ -1,4 +1,4 @@
-import { GenericResponse, Product, Provider } from '../types/Api';
+import { GenericResponse, Product, Provider } from '../../types/Api';
 
 export type DataReducerState = {
     products: Product[],
@@ -9,6 +9,7 @@ export type DataReducerState = {
 type DataAction =
     | { type: 'SET_PRODUCTS', payload: Product[] }
     | { type: 'SET_PROVIDERS', payload: Provider[] }
+    | { type: 'DELETE_PROVIDER', payload: { id: number, response: GenericResponse } }
     | { type: 'SET_RESPONSE', payload: GenericResponse }
 
 export default function reducer(state: DataReducerState, action: DataAction): DataReducerState {
@@ -22,6 +23,12 @@ export default function reducer(state: DataReducerState, action: DataAction): Da
             return {
                 ...state,
                 providers: action.payload
+            }
+        case 'DELETE_PROVIDER':
+            return {
+                ...state,
+                response: action.payload.response,
+                providers: state.providers.filter(provider => provider.provider_id !== action.payload.id)
             }
         default:
             return {

@@ -4,7 +4,7 @@ import axios from 'axios';
 import DataContext from './DataContext';
 import DataReducer, { DataReducerState } from './DataReducer';
 
-import { GenericResponse, ProductGetResponse, ProviderDTO, ProviderGetResponse } from '../types/Api';
+import { GenericResponse, ProductGetResponse, ProviderDTO, ProviderGetResponse } from '../../types/Api';
 
 const DataState: FC = ({ children }) => {
 
@@ -57,6 +57,21 @@ const DataState: FC = ({ children }) => {
         }
     }
 
+    const deleteProvider = async (id: number) => {
+        try {
+            const info = await axios.delete<GenericResponse>(`http://localhost:4000/api/v1/provider?id=${id}`);
+            dispatch({
+                type: 'DELETE_PROVIDER',
+                payload: {
+                    id,
+                    response: info.data
+                }
+            })
+        } catch(e) {
+            console.log(e);
+        }
+    }
+
     return (
         <DataContext.Provider
             value={{
@@ -66,6 +81,7 @@ const DataState: FC = ({ children }) => {
                 fetchProducts,
                 fetchProviders,
                 postProvider,
+                deleteProvider,
             }}
         >
             { children }
