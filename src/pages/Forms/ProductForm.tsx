@@ -1,26 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
+
+import useForm from '../../hooks/useForm';
 
 import PageContainer from '../../components/UI/PageContainer';
 import Wrapper from '../../components/UI/Wrapper';
 import Form from '../../components/Form/Form';
 import Input from '../../components/Form/Input';
-import Select from '../../components/Form/Select';
 import Button from '../../components/UI/Button';
 
 const ProductForm = () => {
 
-    const [name, setName] = useState('');
-    const [provider, setProvider] = useState('');
-
-    const options: string[] = [
-        'Asus',
-        'Gigabyte',
-        'Zotac'
-    ];
+    const { formData, handleChange } = useForm({
+        name: '',
+        price: 0,
+        description: ''
+    })
 
     const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        alert('Form submitted' + name);
     }
 
     return (
@@ -33,14 +30,24 @@ const ProductForm = () => {
                         label="Nombre"
                         id="name"
                         placeholder="Nombre del producto"
-                        value={ name }
-                        onChange={ event => setName(event.target.value) }
+                        value={ formData.name }
+                        onChange={ event => handleChange(event, 'name') }
                     />
-                    <Select
-                        options={ options }
-                        label="Proveedor"
-                        value={ provider }
-                        onChange={ event => setProvider(event.target.value) }
+                    <Input
+                        type="number"
+                        label="Precio"
+                        id="price"
+                        placeholder="Precio del producto"
+                        value={ formData.price.toString() }
+                        onChange={ event => handleChange(event, 'price') }
+                    />
+                    <textarea
+                        name="description"
+                        id="description"
+                        placeholder="Descripcion del producto"
+                        className="w-full border border-black p-2 my-2"
+                        value={ formData.description }
+                        onChange={ event => handleChange(event, 'description') }
                     />
                     <div className="w-full md:flex md:justify-center">
                         <Button

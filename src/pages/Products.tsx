@@ -4,14 +4,14 @@ import { RouteComponentProps, Link } from 'react-router-dom';
 import PageContainer from '../components/UI/PageContainer';
 import Wrapper from '../components/UI/Wrapper';
 
-import DataContext from '../context/Data/DataContext';
+import ProductContext from '../context/Product/ProductContext';
 import Button from '../components/UI/Button';
 
 interface ProductsProps extends RouteComponentProps{}
 
 const Products: FC<ProductsProps> = () => {
 
-    const { products, fetchProducts } = useContext(DataContext);
+    const { products, fetchProducts } = useContext(ProductContext);
 
     useEffect(() => {
         const fetching = async () => {

@@ -9,7 +9,7 @@ import Providers from './pages/Providers';
 import ProviderForm from './pages/Forms/ProviderForm';
 import Deliveries from './pages/Deliveries';
 
-import DataState from './context/Data/DataState';
+import ProductState from './context/Product/ProductState';
 import ProviderState from './context/Provider/ProviderState';
 
 import Wrapper from './components/UI/Wrapper';
@@ -21,7 +21,7 @@ function App() {
     return (
         <Router>
             <ProviderState>
-                <DataState>
+                <ProductState>
                     <AppContainer>
                         <div className="h-20 bg-blue-900 lg:h-full">
                             <Wrapper className="h-full">
@@ -42,7 +42,7 @@ function App() {
                             <Route exact path="/entregas/nuevo" component={ () => <h1>Form</h1> }/>
                         </Switch>
                     </AppContainer>
-                </DataState>
+                </ProductState>
             </ProviderState>
         </Router>
     );
