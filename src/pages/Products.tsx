@@ -11,7 +11,7 @@ interface ProductsProps extends RouteComponentProps{}
 
 const Products: FC<ProductsProps> = () => {
 
-    const { products, fetchProducts } = useContext(ProductContext);
+    const { products, fetchProducts, deleteProduct } = useContext(ProductContext);
 
     useEffect(() => {
         const fetching = async () => {
@@ -19,6 +19,10 @@ const Products: FC<ProductsProps> = () => {
         }
         fetching();
     }, []);
+
+    const deleteProductRequest = async (id: number) => {
+        await deleteProduct(id);
+    }
 
     return (
         <PageContainer>
@@ -54,7 +58,12 @@ const Products: FC<ProductsProps> = () => {
                                             <Button color="yellow" type="button" text="Editar"/>
                                         </div>
                                         <div className="w-full md:w-28">
-                                            <Button color="red" type="button" text="Borrar"/>
+                                            <Button
+                                                color="red"
+                                                type="button"
+                                                text="Borrar"
+                                                onClick={ () => deleteProductRequest(product.product_id) }
+                                            />
                                         </div>
                                     </div>
                                 </td>

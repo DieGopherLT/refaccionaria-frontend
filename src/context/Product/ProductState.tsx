@@ -57,6 +57,15 @@ const ProductState: FC = ({ children }) => {
         }
     }
 
+    const deleteProduct = async (id: number) => {
+        try {
+            await AxiosClient.delete<GenericResponse>(`/product?id=${id}`);
+            dispatch({ type: 'DELETE_PRODUCT', payload: id });
+        } catch(e: any) {
+            console.log(e.response);
+        }
+    }
+
     return (
         <ProductContext.Provider
             value={{
@@ -65,7 +74,8 @@ const ProductState: FC = ({ children }) => {
                 categories: state.categories,
                 response: state.response,
                 fetchProducts,
-                postProduct
+                postProduct,
+                deleteProduct
             }}
         >
             { children }
