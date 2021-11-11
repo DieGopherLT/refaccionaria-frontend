@@ -3,7 +3,7 @@ import AxiosClient from '../../config/axios';
 
 import ProductContext from './ProductContext';
 import DataReducer, { ProductReducerState } from './ProductReducer';
-import { productDtoToProduct } from '../../helpers/products';
+import { productDtoToProduct } from '../../helpers/product.helper';
 
 import {
     BrandResponse,
