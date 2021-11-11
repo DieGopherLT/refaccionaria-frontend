@@ -13,11 +13,16 @@ const Home: FC<RouteComponentProps> = props => {
 
     return (
         <PageContainer>
-            <Wrapper className="max-w-5xl mt-5">
+            <Wrapper className="max-w-5xl mt-5 flex justify-between md:justify-start gap-2">
                 <Link
                     to="/ventas/nuevo"
                     className="text-white text-center bg-green-500 hover:bg-green-700 p-3 rounded block w-full lg:w-44"
                 >Agregar nueva venta</Link>
+
+                <Link
+                    to="/ventas/resumen"
+                    className="text-white text-center bg-blue-500 hover:bg-blue-700 p-3 rounded block w-full lg:w-52"
+                >Ver resumen de ventas</Link>
             </Wrapper>
             <Wrapper className="max-w-5xl mt-5 overflow-x-auto whitespace-nowrap md:whitespace-normal">
                 <table className="w-full border-collapse lg:table-fixed">
