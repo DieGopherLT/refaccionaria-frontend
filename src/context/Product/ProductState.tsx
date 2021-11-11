@@ -3,6 +3,7 @@ import AxiosClient from '../../config/axios';
 
 import ProductContext from './ProductContext';
 import DataReducer, { ProductReducerState } from './ProductReducer';
+import { productDtoToProduct } from '../../helpers/products';
 
 import {
     BrandResponse,
@@ -69,20 +70,13 @@ const ProductState: FC = ({ children }) => {
     }
 
     const updateProduct = async (product: Product, productDto: ProductDTO) => {
-        product.name = productDto.name;
-        product.brand = productDto.brand;
-        product.price = productDto.price;
-        product.amount = productDto.amount;
-        product.description = productDto.description;
-        product.category.category_id = productDto.category_id;
-        product.provider.provider_id = productDto.provider_id;
         try {
             await AxiosClient.put<GenericResponse>(`/product?id=${product.product_id}`, productDto, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
-            dispatch({ type: 'UPDATE_PRODUCT', payload: product });
+            dispatch({ type: 'UPDATE_PRODUCT', payload: productDtoToProduct(product, productDto) });
         } catch(e: any) {
             console.log(e.response);
         }
