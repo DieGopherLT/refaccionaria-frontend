@@ -8,6 +8,7 @@ interface DataContextProps extends ProductReducerState {
     setEditingProduct: (product: Product | null) => void;
     updateProduct: (product: Product, productDto: ProductDTO) => Promise<void>;
     deleteProduct: (id: number) => Promise<void>;
+    fetchBrands: () => void;
 }
 
 const ProductContext = createContext<DataContextProps>({} as DataContextProps);

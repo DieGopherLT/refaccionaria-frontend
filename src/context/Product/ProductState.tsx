@@ -20,6 +20,7 @@ const ProductState: FC = ({ children }) => {
         products: [],
         brands: [],
         categories: [],
+        shouldFetchBrands: true,
         editingProduct: null,
         response: null
     }
@@ -27,22 +28,20 @@ const ProductState: FC = ({ children }) => {
     const [state, dispatch] = useReducer(DataReducer, initialState);
 
     useEffect(() => {
-        const fetchStuff = async () => {
-            const brandsPromise = AxiosClient.get<BrandResponse>('/brand');
-            const categoriesPromise = AxiosClient.get<CategoryResponse>('/category');
-
-            const [ brands, categories ] = await Promise.all( [brandsPromise, categoriesPromise] );
-            dispatch({
-                type: 'SET_BRANDS_CATEGORIES',
-                payload: {
-                    brands: brands.data.brands,
-                    categories: categories.data.categories
-                }
-            });
+        if (state.shouldFetchBrands) {
+            AxiosClient.get<BrandResponse>('/brand')
+                .then(response => dispatch({ type: 'SET_BRANDS', payload: response.data.brands }))
         }
-        fetchStuff();
+    }, [state.shouldFetchBrands]);
+
+    useEffect(() => {
+        AxiosClient.get<CategoryResponse>('/category')
+            .then(response => dispatch({ type: 'SET_CATEGORIES', payload: response.data.categories }))
     }, []);
 
+    const fetchBrands = () => {
+        dispatch({ type: 'FETCH_BRANDS' });
+    }
 
     const fetchProducts = async () => {
         try {
@@ -97,13 +96,15 @@ const ProductState: FC = ({ children }) => {
                 products: state.products,
                 brands: state.brands,
                 categories: state.categories,
+                shouldFetchBrands: state.shouldFetchBrands,
                 response: state.response,
                 editingProduct: state.editingProduct,
                 fetchProducts,
                 postProduct,
                 setEditingProduct,
                 updateProduct,
-                deleteProduct
+                deleteProduct,
+                fetchBrands
             }}
         >
             { children }

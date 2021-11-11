@@ -4,13 +4,16 @@ export type ProductReducerState = {
     products: Product[],
     editingProduct: Product | null;
     brands: string[],
+    shouldFetchBrands: boolean,
     categories: Category[]
     response: GenericResponse | null,
 }
 
 type ProductAction =
     | { type: 'SET_PRODUCTS', payload: Product[] }
-    | { type: 'SET_BRANDS_CATEGORIES', payload: { brands: string[], categories: Category[] } }
+    | { type: 'SET_BRANDS', payload: string[] }
+    | { type: 'FETCH_BRANDS' }
+    | { type: 'SET_CATEGORIES', payload: Category[] }
     | { type: 'SET_EDITING_PRODUCT', payload: Product | null }
     | { type: 'UPDATE_PRODUCT', payload: Product }
     | { type: 'DELETE_PRODUCT', payload: number }
@@ -22,11 +25,21 @@ export default function reducer(state: ProductReducerState, action: ProductActio
                 ...state,
                 products: action.payload,
             }
-        case 'SET_BRANDS_CATEGORIES':
+        case 'SET_BRANDS':
             return {
                 ...state,
-                brands: action.payload.brands,
-                categories: action.payload.categories
+                brands: action.payload,
+                shouldFetchBrands: false
+            }
+        case 'FETCH_BRANDS':
+            return {
+                ...state,
+                shouldFetchBrands: true
+            }
+        case 'SET_CATEGORIES':
+            return {
+                ...state,
+                categories: action.payload
             }
         case 'SET_EDITING_PRODUCT':
             return {
