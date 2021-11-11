@@ -11,6 +11,7 @@ import Deliveries from './pages/Deliveries';
 
 import ProductState from './context/Product/ProductState';
 import ProviderState from './context/Provider/ProviderState';
+import SaleState from './context/Sales/SaleState';
 
 import Wrapper from './components/UI/Wrapper';
 import Navigation from './components/Navbar/Navigation';
@@ -20,30 +21,32 @@ import { navData } from './data/Navigation';
 function App() {
     return (
         <Router>
-            <ProviderState>
-                <ProductState>
-                    <AppContainer>
-                        <div className="h-20 bg-blue-900 lg:h-full">
-                            <Wrapper className="h-full">
-                                <Navigation data={ navData }/>
-                            </Wrapper>
-                        </div>
+            <SaleState>
+                <ProviderState>
+                    <ProductState>
+                        <AppContainer>
+                            <div className="h-20 bg-blue-900 lg:h-full">
+                                <Wrapper className="h-full">
+                                    <Navigation data={ navData }/>
+                                </Wrapper>
+                            </div>
 
-                        <Switch>
-                            <Route exact path="/" component={ Home }/>
+                            <Switch>
+                                <Route exact path="/" component={ Home }/>
 
-                            <Route exact path="/productos" component={ Products }/>
-                            <Route exact path="/productos/nuevo" component={ ProductForm }/>
+                                <Route exact path="/productos" component={ Products }/>
+                                <Route exact path="/productos/nuevo" component={ ProductForm }/>
 
-                            <Route exact path="/proveedores" component={ Providers }/>
-                            <Route exact path="/proveedores/nuevo" component={ ProviderForm }/>
+                                <Route exact path="/proveedores" component={ Providers }/>
+                                <Route exact path="/proveedores/nuevo" component={ ProviderForm }/>
 
-                            <Route exact path="/entregas" component={ Deliveries }/>
-                            <Route exact path="/entregas/nuevo" component={ () => <h1>Form</h1> }/>
-                        </Switch>
-                    </AppContainer>
-                </ProductState>
-            </ProviderState>
+                                <Route exact path="/entregas" component={ Deliveries }/>
+                                <Route exact path="/entregas/nuevo" component={ () => <h1>Form</h1> }/>
+                            </Switch>
+                        </AppContainer>
+                    </ProductState>
+                </ProviderState>
+            </SaleState>
         </Router>
     );
 }

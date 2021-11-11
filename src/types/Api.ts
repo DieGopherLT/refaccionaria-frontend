@@ -8,6 +8,11 @@ export interface ProviderGetResponse {
     providers: Provider[];
 }
 
+export interface SaleGetResponse {
+    error: boolean;
+    sales: Sale[];
+}
+
 export interface GenericResponse {
     message: string;
     error: boolean;
@@ -58,4 +63,12 @@ export interface ProviderDTO {
 
 export interface Provider extends ProviderDTO{
     provider_id: number;
+}
+
+export interface Sale {
+    sale_id: number;
+    date:    Date;
+    amount:  number;
+    total:   number;
+    product: Product;
 }
