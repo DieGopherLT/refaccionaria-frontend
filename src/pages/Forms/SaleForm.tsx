@@ -1,4 +1,4 @@
-import React, { FC, useState, useContext, FormEvent, ChangeEvent } from 'react';
+import React, { FC, useState, useEffect, useContext, FormEvent, ChangeEvent } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
 import SaleContext from '../../context/Sales/SaleContext';
@@ -17,18 +17,25 @@ import { Option } from '../../types/Form';
 
 const SaleForm: FC<RouteComponentProps> = props => {
 
-    const { postSale } = useContext(SaleContext);
+    const { editingSale, postSale, setEditingSale } = useContext(SaleContext);
     const { products } = useContext(ProductContext);
 
     const { product_id, amount, handleChange } = useForm({
-        product_id: '',
-        amount: 0
+        product_id: editingSale?.product.product_id || '',
+        amount: editingSale?.amount || 0
     });
-    const [price, setPrice] = useState<number>(0);
+    const [price, setPrice] = useState<number>(editingSale?.product.price || 0);
+
+    useEffect(() => {
+        return () => {
+            if (editingSale !== null)
+                setEditingSale(null);
+        }
+    }, [])
 
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        postSale({ product_id: parseInt(product_id), amount: parseInt(amount.toString()), total: amount * price })
+        postSale({ product_id: parseInt(product_id.toString()), amount: parseInt(amount.toString()), total: amount * price })
             .then(() => props.history.push('/'))
     }
 

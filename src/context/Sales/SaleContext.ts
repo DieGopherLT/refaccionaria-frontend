@@ -1,10 +1,11 @@
 import { createContext } from 'react';
 import { SaleReducerState } from './SaleReducer';
-import { SaleDTO } from '../../types/Api';
+import { Sale, SaleDTO } from '../../types/Api';
 
 interface SaleContextProps extends SaleReducerState {
     fetchSales: () => void;
     postSale: (saleDto: SaleDTO) => Promise<void>;
+    setEditingSale: (data: Sale | null) => void;
 }
 
 const SaleContext = createContext<SaleContextProps>({} as SaleContextProps);

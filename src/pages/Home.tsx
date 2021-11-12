@@ -7,9 +7,16 @@ import PageContainer from '../components/UI/PageContainer';
 import Wrapper from '../components/UI/Wrapper';
 import Button from '../components/UI/Button';
 
+import { Sale } from '../types/Api';
+
 const Home: FC<RouteComponentProps> = props => {
 
-    const { sales } = useContext(SaleContext);
+    const { sales, setEditingSale } = useContext(SaleContext);
+
+    const editS = (data: Sale | null) => {
+        setEditingSale(data);
+        props.history.push('/ventas/nuevo');
+    }
 
     return (
         <PageContainer>
@@ -51,6 +58,7 @@ const Home: FC<RouteComponentProps> = props => {
                                                 color="yellow"
                                                 type="button"
                                                 text="Editar"
+                                                onClick={ () => editS(sale) }
                                             />
                                         </div>
                                         <div className="w-full md:w-28">
