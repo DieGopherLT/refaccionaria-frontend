@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useContext } from 'react';
+import React, { FC, useContext } from 'react';
 import { RouteComponentProps, Link } from 'react-router-dom';
 
 import PageContainer from '../components/UI/PageContainer';
@@ -13,14 +13,7 @@ interface ProductsProps extends RouteComponentProps{}
 
 const Products: FC<ProductsProps> = props => {
 
-    const { products, fetchProducts, setEditingProduct, deleteProduct } = useContext(ProductContext);
-
-    useEffect(() => {
-        const fetching = async () => {
-            await fetchProducts();
-        }
-        fetching();
-    }, []);
+    const { products, setEditingProduct, deleteProduct } = useContext(ProductContext);
 
     const deleteProductRequest = async (id: number) => {
         await deleteProduct(id);

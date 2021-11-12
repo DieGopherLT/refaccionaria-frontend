@@ -18,6 +18,7 @@ const ProductState: FC = ({ children }) => {
 
     const initialState: ProductReducerState = {
         products: [],
+        shouldFetchProducts: true,
         brands: [],
         categories: [],
         shouldFetchBrands: true,
@@ -26,6 +27,13 @@ const ProductState: FC = ({ children }) => {
     }
 
     const [state, dispatch] = useReducer(DataReducer, initialState);
+
+    useEffect(() => {
+        if (state.shouldFetchProducts) {
+            AxiosClient.get<ProductGetResponse>('/product')
+                .then(result => dispatch({ type: 'SET_PRODUCTS', payload: result.data.products }))
+        }
+    }, [state.shouldFetchProducts]);
 
     useEffect(() => {
         if (state.shouldFetchBrands) {
@@ -39,18 +47,9 @@ const ProductState: FC = ({ children }) => {
             .then(response => dispatch({ type: 'SET_CATEGORIES', payload: response.data.categories }))
     }, []);
 
-    const fetchBrands = () => {
-        dispatch({ type: 'FETCH_BRANDS' });
-    }
+    const fetchBrands = () => dispatch({ type: 'FETCH_BRANDS' });
 
-    const fetchProducts = async () => {
-        try {
-            const info = await AxiosClient.get<ProductGetResponse>('/product');
-            dispatch({ type: 'SET_PRODUCTS', payload: info.data.products });
-        } catch(e: any) {
-            console.log(e);
-        }
-    }
+    const fetchProducts = async () => dispatch({ type: 'FETCH_PRODUCTS' });
 
     const postProduct = async (product: ProductDTO) => {
         try {
@@ -96,7 +95,6 @@ const ProductState: FC = ({ children }) => {
                 products: state.products,
                 brands: state.brands,
                 categories: state.categories,
-                shouldFetchBrands: state.shouldFetchBrands,
                 response: state.response,
                 editingProduct: state.editingProduct,
                 fetchProducts,

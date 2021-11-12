@@ -2,15 +2,17 @@ import { Category, GenericResponse, Product } from '../../types/Api';
 
 export type ProductReducerState = {
     products: Product[],
+    shouldFetchProducts?: boolean,
     editingProduct: Product | null;
     brands: string[],
-    shouldFetchBrands: boolean,
+    shouldFetchBrands?: boolean,
     categories: Category[]
     response: GenericResponse | null,
 }
 
 type ProductAction =
     | { type: 'SET_PRODUCTS', payload: Product[] }
+    | { type: 'FETCH_PRODUCTS' }
     | { type: 'SET_BRANDS', payload: string[] }
     | { type: 'FETCH_BRANDS' }
     | { type: 'SET_CATEGORIES', payload: Category[] }
@@ -24,6 +26,12 @@ export default function reducer(state: ProductReducerState, action: ProductActio
             return {
                 ...state,
                 products: action.payload,
+                shouldFetchProducts: false
+            }
+        case 'FETCH_PRODUCTS':
+            return {
+                ...state,
+                shouldFetchProducts: true
             }
         case 'SET_BRANDS':
             return {
