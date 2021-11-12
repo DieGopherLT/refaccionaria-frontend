@@ -16,6 +16,7 @@ const Input: FC<InputProps> = props => {
             <label htmlFor={ id }>{ label }</label>
             <input
                 className="border border-black p-1 rounded"
+                min={ 0 }
                 id={ id }
                 type={ type }
                 placeholder={ placeholder }
