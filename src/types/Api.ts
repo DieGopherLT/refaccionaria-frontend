@@ -72,3 +72,9 @@ export interface Sale {
     total:   number;
     product: Product;
 }
+
+export interface SaleDTO {
+    product_id: number;
+    total: number;
+    amount: number;
+}

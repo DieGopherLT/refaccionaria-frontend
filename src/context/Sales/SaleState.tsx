@@ -4,7 +4,7 @@ import AxiosClient from '../../config/axios';
 import SaleContext from './SaleContext';
 import SaleReducer, { SaleReducerState } from './SaleReducer';
 
-import { SaleGetResponse } from '../../types/Api';
+import { GenericResponse, SaleDTO, SaleGetResponse } from '../../types/Api';
 
 const SaleState: FC = ({ children }) => {
 
@@ -24,11 +24,25 @@ const SaleState: FC = ({ children }) => {
 
     const fetchSales = () => dispatch({ type: 'FETCH_SALES' });
 
+    const postSale = async (sale: SaleDTO) => {
+        try {
+            await AxiosClient.post<GenericResponse>('/sale', sale, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            fetchSales();
+        } catch(e: any) {
+            console.log(e.response.data);
+        }
+    }
+
     return(
         <SaleContext.Provider
             value={{
                 sales: state.sales,
-                fetchSales
+                fetchSales,
+                postSale
             }}
         >
             { children }

@@ -1,6 +1,7 @@
 import React, { FC, useState, useContext, FormEvent, ChangeEvent } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
+import SaleContext from '../../context/Sales/SaleContext';
 import ProductContext from '../../context/Product/ProductContext';
 
 import useForm from '../../hooks/useForm';
@@ -16,9 +17,10 @@ import { Option } from '../../types/Form';
 
 const SaleForm: FC<RouteComponentProps> = props => {
 
+    const { postSale } = useContext(SaleContext);
     const { products } = useContext(ProductContext);
 
-    const { formData, handleChange } = useForm({
+    const { product_id, amount, handleChange } = useForm({
         product_id: '',
         amount: 0
     });
@@ -26,6 +28,8 @@ const SaleForm: FC<RouteComponentProps> = props => {
 
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        postSale({ product_id: parseInt(product_id), amount: parseInt(amount.toString()), total: amount * price })
+            .then(() => props.history.push('/'))
     }
 
     const handleProductChange = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -51,18 +55,18 @@ const SaleForm: FC<RouteComponentProps> = props => {
                     <Select
                         label="Producto"
                         options={ productOptions }
-                        value={ formData.product_id }
+                        value={ product_id }
                         onChange={ handleProductChange }
                     />
                     <Input
                         type="number"
                         label="Cantidad a vender"
                         id="amount"
-                        value={ formData.amount.toString() }
+                        value={ amount.toString() }
                         onChange={ event => handleChange(event, 'amount') }
                     />
-                    <p className={ `${formData.product_id !== '' ? 'block' : 'hidden'} text-lg` }>
-                        <span className="font-bold">Total a pagar:</span> { formData.amount * price }
+                    <p className={ `${product_id !== '' ? 'block' : 'hidden'} text-lg` }>
+                        <span className="font-bold">Total a pagar:</span> { amount * price }
                     </p>
                     <div className="w-full md:flex md:justify-center">
                         <Button
