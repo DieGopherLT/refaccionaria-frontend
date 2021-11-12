@@ -18,7 +18,7 @@ import { Option } from '../../types/Form';
 const SaleForm: FC<RouteComponentProps> = props => {
 
     const { editingSale, postSale, setEditingSale } = useContext(SaleContext);
-    const { products } = useContext(ProductContext);
+    const { products, fetchProducts } = useContext(ProductContext);
 
     const { product_id, amount, handleChange } = useForm({
         product_id: editingSale?.product.product_id || '',
@@ -36,7 +36,10 @@ const SaleForm: FC<RouteComponentProps> = props => {
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         postSale({ product_id: parseInt(product_id.toString()), amount: parseInt(amount.toString()), total: amount * price })
-            .then(() => props.history.push('/'))
+            .then(() => {
+                fetchProducts();
+                props.history.push('/');
+            })
     }
 
     const handleProductChange = (event: ChangeEvent<HTMLSelectElement>) => {

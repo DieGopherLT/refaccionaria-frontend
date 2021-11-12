@@ -49,7 +49,7 @@ const ProductState: FC = ({ children }) => {
 
     const fetchBrands = () => dispatch({ type: 'FETCH_BRANDS' });
 
-    const fetchProducts = async () => dispatch({ type: 'FETCH_PRODUCTS' });
+    const fetchProducts = () => dispatch({ type: 'FETCH_PRODUCTS' });
 
     const postProduct = async (product: ProductDTO) => {
         try {

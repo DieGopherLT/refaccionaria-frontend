@@ -3,7 +3,7 @@ import { ProductReducerState } from './ProductReducer';
 import { Product, ProductDTO } from '../../types/Api';
 
 interface DataContextProps extends ProductReducerState {
-    fetchProducts: () => Promise<void>;
+    fetchProducts: () => void;
     postProduct: (product: ProductDTO) => Promise<void>;
     setEditingProduct: (product: Product | null) => void;
     updateProduct: (product: Product, productDto: ProductDTO) => Promise<void>;
