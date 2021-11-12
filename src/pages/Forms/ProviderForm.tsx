@@ -3,6 +3,7 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import useForm from '../../hooks/useForm';
 
+import ProductContext from '../../context/Product/ProductContext';
 import ProviderContext from '../../context/Provider/ProviderContext';
 
 import PageContainer from '../../components/UI/PageContainer';
@@ -16,8 +17,9 @@ import { ProviderDTO } from '../../types/Api';
 const ProviderForm: FC<RouteComponentProps> = props => {
 
     const {
-        editingProvider, postProvider, setEditingProvider, editProvider
+        editingProvider, fetchProviders, postProvider, setEditingProvider, editProvider
     } = useContext(ProviderContext);
+    const { fetchBrands } = useContext(ProductContext);
 
     const { formData, handleChange } = useForm<ProviderDTO>({
         name: editingProvider?.name || '',
@@ -38,11 +40,17 @@ const ProviderForm: FC<RouteComponentProps> = props => {
         event.preventDefault();
         if (editingProvider === null) {
             postProvider(formData)
-                .then(() => props.history.push('/proveedores'));
+                .then(() => {
+                    fetchProviders();
+                    fetchBrands();
+                    props.history.push('/proveedores');
+                });
         } else {
             editProvider({ ...formData, provider_id: editingProvider.provider_id })
                 .then(() => {
                     setEditingProvider(null);
+                    fetchProviders();
+                    fetchBrands();
                     props.history.push('/proveedores');
                 })
         }

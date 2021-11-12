@@ -3,7 +3,7 @@ import { ProviderReducerState } from './ProviderReducer';
 import { ProviderDTO, Provider } from '../../types/Api';
 
 interface ProviderContextProps extends ProviderReducerState {
-    fetchProviders: () => Promise<void>;
+    fetchProviders: () => void;
     postProvider: (provider: ProviderDTO) => Promise<void>;
     setEditingProvider: (provider: Provider | null) => void;
     editProvider: (provider: Provider) => Promise<void>;

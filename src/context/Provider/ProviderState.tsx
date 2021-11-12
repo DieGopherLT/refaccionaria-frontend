@@ -1,4 +1,4 @@
-import React, { FC, useReducer } from 'react';
+import React, { FC, useEffect, useReducer } from 'react';
 import AxiosClient from '../../config/axios';
 
 import ProviderReducer, { ProviderReducerState } from './ProviderReducer';
@@ -9,20 +9,19 @@ const ProviderState: FC = ({ children }) => {
 
     const initialState: ProviderReducerState = {
         providers: [],
+        shouldFetchProvider: true,
         editingProvider: null,
         providerResponse: null
     }
 
     const [state, dispatch] = useReducer(ProviderReducer, initialState);
 
-    const fetchProviders = async () => {
-        try {
-            const info = await AxiosClient.get<ProviderGetResponse>('/provider');
-            dispatch({ type: 'SET_PROVIDERS', payload: info.data.providers });
-        } catch(e: any) {
-            console.log(e.response);
-        }
-    }
+    useEffect(() => {
+        AxiosClient.get<ProviderGetResponse>('/provider')
+            .then(result => dispatch({ type: 'SET_PROVIDERS', payload: result.data.providers }))
+    }, [state.shouldFetchProvider])
+
+    const fetchProviders =  () => dispatch({ type: 'FETCH_PROVIDERS' });
 
     const postProvider = async (provider: ProviderDTO) => {
         try {

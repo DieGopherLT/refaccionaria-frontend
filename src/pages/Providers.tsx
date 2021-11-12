@@ -1,6 +1,7 @@
-import React, { FC, useEffect, useContext } from 'react';
+import React, { FC, useContext } from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 
+import ProductContext from '../context/Product/ProductContext';
 import ProviderContext from '../context/Provider/ProviderContext';
 
 import Wrapper from '../components/UI/Wrapper';
@@ -11,14 +12,8 @@ import { Provider } from '../types/Api';
 
 const Providers: FC<RouteComponentProps> = props => {
 
-    const { providers, fetchProviders, setEditingProvider, deleteProvider } = useContext(ProviderContext);
-
-    useEffect(() => {
-        const fetching = async () => {
-            await fetchProviders();
-        }
-        fetching();
-    }, []);
+    const { providers, setEditingProvider, deleteProvider } = useContext(ProviderContext);
+    const { fetchBrands } = useContext(ProductContext);
 
     const editP = (provider: Provider) => {
         setEditingProvider(provider);
@@ -27,6 +22,7 @@ const Providers: FC<RouteComponentProps> = props => {
 
     const deleteP = async (id: number) => {
         await deleteProvider(id);
+        fetchBrands();
     }
 
     return (
