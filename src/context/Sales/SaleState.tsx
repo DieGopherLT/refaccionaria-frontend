@@ -53,6 +53,15 @@ const SaleState: FC = ({ children }) => {
         }
     }
 
+    const deleteSale = async (saleId: number) => {
+        try {
+            await AxiosClient.delete<GenericResponse>(`/sale?id=${saleId}`);
+            dispatch({ type: 'DELETE_SALE', payload: saleId });
+        } catch(e: any) {
+            console.log(e.response.data);
+        }
+    }
+
     return(
         <SaleContext.Provider
             value={{
@@ -61,7 +70,8 @@ const SaleState: FC = ({ children }) => {
                 fetchSales,
                 postSale,
                 setEditingSale,
-                updateSale
+                updateSale,
+                deleteSale
             }}
         >
             { children }

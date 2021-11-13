@@ -11,12 +11,16 @@ import { Sale } from '../types/Api';
 
 const Home: FC<RouteComponentProps> = props => {
 
-    const { sales, setEditingSale } = useContext(SaleContext);
+    const { sales, setEditingSale, deleteSale } = useContext(SaleContext);
 
     const openEditForm = (data: Sale | null) => {
         setEditingSale(data);
         props.history.push('/ventas/nuevo');
     }
+
+    const deleteSaleHandler = async (id: number) => {
+        await deleteSale(id);
+    };
 
     return (
         <PageContainer>
@@ -66,6 +70,7 @@ const Home: FC<RouteComponentProps> = props => {
                                                 color="red"
                                                 type="button"
                                                 text="Borrar"
+                                                onClick={ () => deleteSaleHandler(sale.sale_id) }
                                             />
                                         </div>
                                     </div>

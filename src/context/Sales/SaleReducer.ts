@@ -10,6 +10,7 @@ type SaleAction =
     | { type: 'SET_SALES', payload: Sale[] }
     | { type: 'FETCH_SALES' }
     | { type: 'SET_EDITING_SALE', payload: Sale | null }
+    | { type: 'DELETE_SALE', payload: number }
 
 export default function reducer(state: SaleReducerState, action: SaleAction): SaleReducerState {
     switch(action.type) {
@@ -28,6 +29,11 @@ export default function reducer(state: SaleReducerState, action: SaleAction): Sa
             return {
                 ...state,
                 editingSale: action.payload
+            }
+        case 'DELETE_SALE':
+            return {
+                ...state,
+                sales: state.sales.filter(sale => sale.sale_id !== action.payload)
             }
         default:
             return {
