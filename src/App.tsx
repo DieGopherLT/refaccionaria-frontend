@@ -9,6 +9,7 @@ import ProductForm from './pages/Forms/ProductForm';
 import Providers from './pages/Providers';
 import ProviderForm from './pages/Forms/ProviderForm';
 import Deliveries from './pages/Deliveries';
+import DeliveryForm from './pages/Forms/DeliveryForm';
 
 import ProductState from './context/Product/ProductState';
 import ProviderState from './context/Provider/ProviderState';
@@ -45,7 +46,7 @@ function App() {
                                     <Route exact path="/proveedores/nuevo" component={ ProviderForm }/>
 
                                     <Route exact path="/entregas" component={ Deliveries }/>
-                                    <Route exact path="/entregas/nuevo" component={ () => <h1>Form</h1> }/>
+                                    <Route exact path="/entregas/nuevo" component={ DeliveryForm }/>
                                 </Switch>
                             </AppContainer>
                         </ProductState>
