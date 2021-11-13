@@ -1,11 +1,16 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { FC, useContext } from 'react';
+import { Link, RouteComponentProps } from 'react-router-dom';
+
+import DeliveryContext from '../context/Delivery/DeliveryContext';
 
 import PageContainer from '../components/UI/PageContainer';
 import Wrapper from '../components/UI/Wrapper';
-import Table from '../components/Table/Table';
+import Button from '../components/UI/Button';
 
-const Deliveries = () => {
+const Deliveries: FC<RouteComponentProps> = props => {
+
+    const { deliveries } = useContext(DeliveryContext);
+
     return (
         <PageContainer>
             <Wrapper className="max-w-5xl mt-5">
@@ -14,14 +19,44 @@ const Deliveries = () => {
                     className="text-white text-center bg-green-500 hover:bg-green-700 p-3 rounded block w-full lg:w-52"
                 >Hacer una nueva orden</Link>
             </Wrapper>
-            <Table data={ [] }>
-                <th className="p-1 border border-blue-600 lg:w-9">ID</th>
-                <th className="p-1 border border-blue-600 lg:w-12">Nombre</th>
-                <th className="p-1 border border-blue-600 lg:w-32">Descripcion</th>
-                <th className="p-1 border border-blue-600 lg:w-8">Precio</th>
-                <th className="p-1 border border-blue-600 lg:w-8">Cantidad</th>
-                <th className="p-1 border border-blue-600 lg:w-28">Acciones</th>
-            </Table>
+            <Wrapper className="max-w-5xl mt-5 overflow-x-auto whitespace-nowrap md:whitespace-normal">
+                <table className="w-full border-collapse lg:table-fixed">
+                    <thead>
+                    <tr>
+                        <th className="p-1 border border-blue-600 lg:w-16">Nombre</th>
+                        <th className="p-1 border border-blue-600 lg:w-16">Marca</th>
+                        <th className="p-1 border border-blue-600 lg:w-12">Proveedor</th>
+                        <th className="p-1 border border-blue-600 lg:w-24">Correo</th>
+                        <th className="p-1 border border-blue-600 lg:w-12">Entrega en</th>
+                        <th className="p-1 border border-blue-600 lg:w-12">Cantidad</th>
+                        <th className="p-1 border border-blue-600 lg:w-28">Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    { deliveries.map((delivery, index) => (
+                        <tr key={ index }>
+                            <td className="p-1 border border-blue-600">{ delivery.product.name }</td>
+                            <td className="p-1 border border-blue-600">{ delivery.product.brand }</td>
+                            <td className="p-1 border border-blue-600">{ delivery.provider.name }</td>
+                            <td className="p-1 border border-blue-600">{ delivery.provider.email }</td>
+                            <td className="p-1 border border-blue-600">{ delivery.delivery_date.split('T')[0] }</td>
+                            <td className="p-1 border border-blue-600">{ delivery.amount }</td>
+                            <td className="p-1 border border-blue-600">
+                                <div className="flex justify-around gap-2 lg:gap-0">
+                                    <div className="w-full md:w-28">
+                                        <Button
+                                            color="blue"
+                                            type="button"
+                                            text="Dar de alta"
+                                        />
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    )) }
+                    </tbody>
+                </table>
+            </Wrapper>
         </PageContainer>
     );
 };
