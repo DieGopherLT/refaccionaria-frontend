@@ -40,6 +40,19 @@ const SaleState: FC = ({ children }) => {
 
     const setEditingSale = (data: Sale | null) => dispatch({ type: 'SET_EDITING_SALE', payload: data });
 
+    const updateSale = async (data: SaleDTO, sale: Sale) => {
+        try {
+            console.log(data);
+            await AxiosClient.put<GenericResponse>(`/sale?id=${sale.sale_id}`, data, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        } catch(e: any) {
+            console.log(e.response.data);
+        }
+    }
+
     return(
         <SaleContext.Provider
             value={{
@@ -47,7 +60,8 @@ const SaleState: FC = ({ children }) => {
                 editingSale: state.editingSale,
                 fetchSales,
                 postSale,
-                setEditingSale
+                setEditingSale,
+                updateSale
             }}
         >
             { children }

@@ -6,6 +6,7 @@ interface SaleContextProps extends SaleReducerState {
     fetchSales: () => void;
     postSale: (saleDto: SaleDTO) => Promise<void>;
     setEditingSale: (data: Sale | null) => void;
+    updateSale: (data: SaleDTO, sale: Sale) => Promise<void>;
 }
 
 const SaleContext = createContext<SaleContextProps>({} as SaleContextProps);

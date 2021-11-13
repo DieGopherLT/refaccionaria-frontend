@@ -13,7 +13,7 @@ const Home: FC<RouteComponentProps> = props => {
 
     const { sales, setEditingSale } = useContext(SaleContext);
 
-    const editS = (data: Sale | null) => {
+    const openEditForm = (data: Sale | null) => {
         setEditingSale(data);
         props.history.push('/ventas/nuevo');
     }
@@ -44,8 +44,8 @@ const Home: FC<RouteComponentProps> = props => {
                         </tr>
                     </thead>
                     <tbody>
-                        { sales.map((sale, index) => (
-                            <tr key={ index + sale.sale_id }>
+                        { sales.map(sale => (
+                            <tr key={ sale.sale_id }>
                                 <td className="p-1 border border-blue-600">{ sale.product.name }</td>
                                 <td className="p-1 border border-blue-600">{ sale.product.brand }</td>
                                 <td className="p-1 border border-blue-600">{ sale.amount }</td>
@@ -58,7 +58,7 @@ const Home: FC<RouteComponentProps> = props => {
                                                 color="yellow"
                                                 type="button"
                                                 text="Editar"
-                                                onClick={ () => editS(sale) }
+                                                onClick={ () => openEditForm(sale) }
                                             />
                                         </div>
                                         <div className="w-full md:w-28">

@@ -14,10 +14,11 @@ import Select from '../../components/Form/Select';
 import Button from '../../components/UI/Button';
 
 import { Option } from '../../types/Form';
+import { SaleDTO } from '../../types/Api';
 
 const SaleForm: FC<RouteComponentProps> = props => {
 
-    const { editingSale, postSale, setEditingSale } = useContext(SaleContext);
+    const { editingSale, fetchSales, postSale, setEditingSale, updateSale } = useContext(SaleContext);
     const { products, fetchProducts } = useContext(ProductContext);
 
     const { product_id, amount, handleChange } = useForm({
@@ -35,11 +36,27 @@ const SaleForm: FC<RouteComponentProps> = props => {
 
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        postSale({ product_id: parseInt(product_id.toString()), amount: parseInt(amount.toString()), total: amount * price })
-            .then(() => {
-                fetchProducts();
-                props.history.push('/');
-            })
+        const sale: SaleDTO = {
+            product_id: parseInt(product_id.toString()),
+            amount: parseInt(amount.toString()),
+            total: amount * price
+        }
+
+        if (editingSale === null) {
+            postSale(sale)
+                .then(() => {
+                    fetchSales();
+                    fetchProducts();
+                    props.history.push('/');
+                });
+        } else {
+            updateSale(sale, editingSale)
+                .then(() => {
+                    fetchSales();
+                    fetchProducts();
+                    props.history.push('/');
+                });
+        }
     }
 
     const handleProductChange = (event: ChangeEvent<HTMLSelectElement>) => {
