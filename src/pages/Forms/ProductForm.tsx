@@ -19,7 +19,7 @@ import { ProductDTO } from '../../types/Api';
 const ProductForm: FC<RouteComponentProps> = props => {
 
     const {
-        editingProduct, brands, categories, postProduct, setEditingProduct, updateProduct
+        editingProduct, brands, categories, fetchProducts, postProduct, setEditingProduct, updateProduct
     } = useContext(ProductContext);
     const { providers } = useContext(ProviderContext);
 
@@ -50,10 +50,16 @@ const ProductForm: FC<RouteComponentProps> = props => {
 
         if (editingProduct === null) {
             postProduct(formData)
-                .then(() => props.history.push('/productos'));
+                .then(() => {
+                    fetchProducts();
+                    props.history.push('/productos');
+                });
         } else {
             updateProduct(editingProduct, formData)
-                .then(() => props.history.push('/productos'));
+                .then(() => {
+                    fetchProducts();
+                    props.history.push('/productos');
+                });
         }
     }
 

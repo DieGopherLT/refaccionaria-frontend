@@ -51,7 +51,7 @@ const Products: FC<ProductsProps> = props => {
                                 <td className="p-1 border border-blue-600">{ product.name }</td>
                                 <td className="p-1 border border-blue-600">{ product.description }</td>
                                 <td className="p-1 border border-blue-600">{ product.price }</td>
-                                <td className="p-1 border border-blue-600">{ product.amount }</td>
+                                <td className="p-1 border border-blue-600">{ product.amount || 0 }</td>
                                 <td className="p-1 border border-blue-600">
                                     <div className="flex justify-around gap-2 lg:gap-0">
                                         <div className="w-full md:w-28">
