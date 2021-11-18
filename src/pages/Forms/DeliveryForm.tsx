@@ -4,6 +4,7 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import useForm from '../../hooks/useForm';
 
+import DeliveryContext from '../../context/Delivery/DeliveryContext';
 import ProductContext from '../../context/Product/ProductContext';
 
 import PageContainer from '../../components/UI/PageContainer';
@@ -14,9 +15,11 @@ import Select from '../../components/Form/Select';
 import Button from '../../components/UI/Button';
 
 import { Option } from '../../types/Form';
+import { DeliveryDTO } from '../../types/Api';
 
 const DeliveryForm: FC<RouteComponentProps> = props => {
 
+    const { fetchDeliveries, postDelivery } = useContext(DeliveryContext);
     const { products } = useContext(ProductContext);
 
     const { formData, handleChange } = useForm({
@@ -29,6 +32,22 @@ const DeliveryForm: FC<RouteComponentProps> = props => {
 
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        const productId = products.filter(product => {
+            return product.name.toLowerCase() === formData.productName.toLowerCase();
+        })[0].product_id;
+
+        const delivery: DeliveryDTO = {
+            product_id: productId,
+            provider_id: parseInt(formData.providerId),
+            delivery_date: date,
+            amount: parseInt(formData.amount)
+        }
+
+        postDelivery(delivery)
+            .then(() => {
+                fetchDeliveries();
+                props.history.push('/entregas');
+            })
     }
 
     const productOptions: Option[] = products.map(product => {

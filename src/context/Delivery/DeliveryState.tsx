@@ -4,7 +4,7 @@ import AxiosClient from '../../config/axios';
 import DeliveryContext from './DeliveryContext';
 import DeliveryReducer, { DeliveryReducerState } from './DeliveryReducer';
 
-import { DeliveryGetResponse } from '../../types/Api';
+import { DeliveryDTO, DeliveryGetResponse, GenericResponse } from '../../types/Api';
 
 const DeliveryState: FC = ({ children }) => {
 
@@ -22,10 +22,26 @@ const DeliveryState: FC = ({ children }) => {
         }
     }, [state.shouldFetchDeliveries]);
 
+    const fetchDeliveries = () => dispatch({ type: 'FETCH_DELIVERIES' });
+
+    const postDelivery = async (delivery: DeliveryDTO) => {
+        try {
+            await AxiosClient.post<GenericResponse>('/delivery', delivery, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        } catch(e: any) {
+            console.log(e.response.data);
+        }
+    }
+
     return (
         <DeliveryContext.Provider
             value={{
-                deliveries: state.deliveries
+                deliveries: state.deliveries,
+                fetchDeliveries,
+                postDelivery
             }}
         >
             { children }

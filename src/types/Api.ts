@@ -90,3 +90,10 @@ export interface Delivery {
     provider:      Provider;
     amount:        number;
 }
+
+export interface DeliveryDTO {
+    product_id: number;
+    provider_id: number;
+    delivery_date: Date;
+    amount: number;
+}
