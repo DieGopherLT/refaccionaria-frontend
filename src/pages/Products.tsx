@@ -45,8 +45,8 @@ const Products: FC<ProductsProps> = props => {
                         </tr>
                     </thead>
                     <tbody>
-                        { products.map((product, index) => (
-                            <tr key={ product.product_id + index }>
+                        { products.map(product => (
+                            <tr key={ `${product.product_id}-${product.name}` }>
                                 <td className="p-1 border border-blue-600">{ product.product_id }</td>
                                 <td className="p-1 border border-blue-600">{ product.name }</td>
                                 <td className="p-1 border border-blue-600">{ product.description }</td>
