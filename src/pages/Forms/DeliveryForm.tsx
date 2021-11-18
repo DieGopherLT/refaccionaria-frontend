@@ -1,4 +1,5 @@
-import React, { FC, useContext, FormEvent } from 'react';
+import React, { FC, useState, useContext, FormEvent } from 'react';
+import DatePicker from 'react-datepicker';
 import { RouteComponentProps } from 'react-router-dom';
 
 import useForm from '../../hooks/useForm';
@@ -8,6 +9,7 @@ import ProductContext from '../../context/Product/ProductContext';
 import PageContainer from '../../components/UI/PageContainer';
 import Wrapper from '../../components/UI/Wrapper';
 import Form from '../../components/Form/Form';
+import Input from '../../components/Form/Input';
 import Select from '../../components/Form/Select';
 import Button from '../../components/UI/Button';
 
@@ -20,7 +22,10 @@ const DeliveryForm: FC<RouteComponentProps> = props => {
     const { formData, handleChange } = useForm({
         productName: '',
         providerId: '',
+        amount: '',
     });
+
+    const [date, setDate] = useState<any>(new Date());
 
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -56,7 +61,27 @@ const DeliveryForm: FC<RouteComponentProps> = props => {
                             options={ providerOptions }
                         />
                     </div>
-                    <div className="w-full md:flex md:justify-center">
+                    <div className="flex flex-col gap-2">
+                        <label htmlFor="date">Fecha</label>
+                        <DatePicker
+                            className="p-1 pl-2 w-full md:w-auto rounded border border-black"
+                            id="date"
+                            dateFormat="dd/MM/yyyy"
+                            dateFormatCalendar="MMM yyyy"
+                            minDate={ new Date() }
+                            selected={ date }
+                            onChange={ date => setDate(date) }
+                        />
+                    </div>
+                    <Input
+                        id="amount"
+                        type="number"
+                        label="Cantidad"
+                        placeholder="Cantidad de productos a ordenar"
+                        value={ formData.amount.toString() }
+                        onChange={ event => handleChange(event, 'amount') }
+                    />
+                    <div className="w-full mt-5 md:flex md:justify-center">
                         <Button
                             className="md:w-44"
                             color="blue"
