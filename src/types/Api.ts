@@ -13,6 +13,11 @@ export interface SaleGetResponse {
     sales: Sale[];
 }
 
+export interface DeliveryGetResponse {
+    deliveries: Delivery[];
+    error:      boolean;
+}
+
 export interface GenericResponse {
     message: string;
     error: boolean;
@@ -76,5 +81,19 @@ export interface Sale {
 export interface SaleDTO {
     product_id: number;
     total: number;
+    amount: number;
+}
+
+export interface Delivery {
+    delivery_date: string;
+    product:       Product;
+    provider:      Provider;
+    amount:        number;
+}
+
+export interface DeliveryDTO {
+    product_id: number;
+    provider_id: number;
+    delivery_date: Date;
     amount: number;
 }
