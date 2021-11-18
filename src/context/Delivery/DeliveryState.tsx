@@ -36,12 +36,22 @@ const DeliveryState: FC = ({ children }) => {
         }
     }
 
+    const deleteDelivery = async (productId: number, providerId: number) => {
+        try {
+            await AxiosClient.delete(`/delivery?productId=${productId}&providerId=${providerId}`);
+            dispatch({ type: 'DELETE_DELIVERY', payload: { productId, providerId } });
+        } catch(e: any) {
+            console.log(e.response.data);
+        }
+    }
+
     return (
         <DeliveryContext.Provider
             value={{
                 deliveries: state.deliveries,
                 fetchDeliveries,
-                postDelivery
+                postDelivery,
+                deleteDelivery
             }}
         >
             { children }

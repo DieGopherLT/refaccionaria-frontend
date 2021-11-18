@@ -9,7 +9,11 @@ import Button from '../components/UI/Button';
 
 const Deliveries: FC<RouteComponentProps> = props => {
 
-    const { deliveries } = useContext(DeliveryContext);
+    const { deliveries, deleteDelivery } = useContext(DeliveryContext);
+
+    const deleteDeli = async (productId: number, providerId: number) => {
+        await deleteDelivery(productId, providerId);
+    }
 
     return (
         <PageContainer>
@@ -48,6 +52,7 @@ const Deliveries: FC<RouteComponentProps> = props => {
                                             color="blue"
                                             type="button"
                                             text="Dar de alta"
+                                            onClick={ () => deleteDeli(delivery.product.product_id, delivery.provider.provider_id) }
                                         />
                                     </div>
                                 </div>
