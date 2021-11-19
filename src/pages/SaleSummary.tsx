@@ -50,8 +50,17 @@ const SaleSummary = () => {
     return (
         <PageContainer>
             <Wrapper className="max-w-5xl mt-5">
-                <p>La categoria que tiene mas ventas es... { bestSellingCategory }</p>
-                <p>El total de ingresos generados es... { totalGeneratedBySales }</p>
+                <h1 className="text-center font-bold text-3xl">Estadísticas</h1>
+                <div className="flex flex-col mt-5">
+                    <div className="grid grid-cols-2 justify-items-center p-2 border border-black">
+                        <p>Total de ingresos generados</p>
+                        <p>{ totalGeneratedBySales }</p>
+                    </div>
+                    <div className="grid grid-cols-2 justify-items-center p-2 border border-black">
+                        <p>Categoría más vendida</p>
+                        <p>{ bestSellingCategory  || 'Desconocido' }</p>
+                    </div>
+                </div>
             </Wrapper>
         </PageContainer>
     );
