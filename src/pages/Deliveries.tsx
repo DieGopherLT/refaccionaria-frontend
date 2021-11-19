@@ -1,6 +1,7 @@
 import React, { FC, useContext } from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 
+import ProductContext from '../context/Product/ProductContext';
 import DeliveryContext from '../context/Delivery/DeliveryContext';
 
 import PageContainer from '../components/UI/PageContainer';
@@ -9,10 +10,12 @@ import Button from '../components/UI/Button';
 
 const Deliveries: FC<RouteComponentProps> = props => {
 
+    const { fetchProducts } = useContext(ProductContext);
     const { deliveries, deleteDelivery } = useContext(DeliveryContext);
 
     const deleteDeli = async (productId: number, providerId: number) => {
         await deleteDelivery(productId, providerId);
+        fetchProducts();
     }
 
     return (
