@@ -1,6 +1,7 @@
 import React, { FC, useContext } from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 
+import ProductContext from '../context/Product/ProductContext';
 import SaleContext from '../context/Sales/SaleContext';
 
 import PageContainer from '../components/UI/PageContainer';
@@ -11,6 +12,7 @@ import { Sale } from '../types/Api';
 
 const Home: FC<RouteComponentProps> = props => {
 
+    const { fetchProducts } = useContext(ProductContext);
     const { sales, setEditingSale, deleteSale } = useContext(SaleContext);
 
     const openEditForm = (data: Sale | null) => {
@@ -20,6 +22,7 @@ const Home: FC<RouteComponentProps> = props => {
 
     const deleteSaleHandler = async (id: number) => {
         await deleteSale(id);
+        fetchProducts();
     };
 
     return (
