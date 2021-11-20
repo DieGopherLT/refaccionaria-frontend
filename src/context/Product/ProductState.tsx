@@ -53,13 +53,14 @@ const ProductState: FC = ({ children }) => {
 
     const postProduct = async (product: ProductDTO) => {
         try {
-            await AxiosClient.post<GenericResponse>('/product', product, {
+            const response = await AxiosClient.post<GenericResponse>('/product', product, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
+            return response.data;
         } catch(e: any) {
-            console.log(e.response);
+            return e.response.data;
         }
     }
 
@@ -69,23 +70,25 @@ const ProductState: FC = ({ children }) => {
 
     const updateProduct = async (product: Product, productDto: ProductDTO) => {
         try {
-            await AxiosClient.put<GenericResponse>(`/product?id=${product.product_id}`, productDto, {
+            const response = await AxiosClient.put<GenericResponse>(`/product?id=${product.product_id}`, productDto, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
             dispatch({ type: 'UPDATE_PRODUCT', payload: productDtoToProduct(product, productDto) });
+            return response.data;
         } catch(e: any) {
-            console.log(e.response);
+            return e.response.data;
         }
     }
 
     const deleteProduct = async (id: number) => {
         try {
-            await AxiosClient.delete<GenericResponse>(`/product?id=${id}`);
+            const response = await AxiosClient.delete<GenericResponse>(`/product?id=${id}`);
             dispatch({ type: 'DELETE_PRODUCT', payload: id });
+            return response.data;
         } catch(e: any) {
-            console.log(e.response);
+            return e.response.data;
         }
     }
 

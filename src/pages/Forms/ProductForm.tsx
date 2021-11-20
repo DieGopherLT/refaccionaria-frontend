@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useContext, useMemo, FormEvent } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import useForm from '../../hooks/useForm';
 
@@ -15,6 +16,7 @@ import Button from '../../components/UI/Button';
 
 import { Option } from '../../types/Form';
 import { ProductDTO } from '../../types/Api';
+import { ToastAlertOptions as options } from '../../data/ToastAlert';
 
 const ProductForm: FC<RouteComponentProps> = props => {
 
@@ -50,15 +52,25 @@ const ProductForm: FC<RouteComponentProps> = props => {
 
         if (editingProduct === null) {
             postProduct(formData)
-                .then(() => {
+                .then(({ error, message }) => {
+                    if (error) {
+                        toast.error(message, options);
+                        return
+                    }
                     fetchProducts();
                     props.history.push('/productos');
+                    toast.success(message, options);
                 });
         } else {
             updateProduct(editingProduct, formData)
-                .then(() => {
+                .then(({ error, message }) => {
+                    if (error) {
+                        toast.error(message, options);
+                        return
+                    }
                     fetchProducts();
                     props.history.push('/productos');
+                    toast.success(message, options);
                 });
         }
     }

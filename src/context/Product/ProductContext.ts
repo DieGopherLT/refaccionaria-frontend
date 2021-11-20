@@ -1,13 +1,13 @@
 import { createContext } from 'react';
 import { ProductReducerState } from './ProductReducer';
-import { Product, ProductDTO } from '../../types/Api';
+import { GenericResponse, Product, ProductDTO } from '../../types/Api';
 
 interface DataContextProps extends ProductReducerState {
     fetchProducts: () => void;
-    postProduct: (product: ProductDTO) => Promise<void>;
+    postProduct: (product: ProductDTO) => Promise<GenericResponse>;
     setEditingProduct: (product: Product | null) => void;
-    updateProduct: (product: Product, productDto: ProductDTO) => Promise<void>;
-    deleteProduct: (id: number) => Promise<void>;
+    updateProduct: (product: Product, productDto: ProductDTO) => Promise<GenericResponse>;
+    deleteProduct: (id: number) => Promise<GenericResponse>;
     fetchBrands: () => void;
 }
 
