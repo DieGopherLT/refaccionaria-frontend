@@ -1,5 +1,7 @@
 import React, { FC, useContext } from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
 
 import ProductContext from '../context/Product/ProductContext';
 import SaleContext from '../context/Sales/SaleContext';
@@ -9,6 +11,7 @@ import Wrapper from '../components/UI/Wrapper';
 import Button from '../components/UI/Button';
 
 import { Sale } from '../types/Api';
+import { ToastAlertOptions as options } from '../data/ToastAlert';
 
 const Home: FC<RouteComponentProps> = props => {
 
@@ -21,8 +24,26 @@ const Home: FC<RouteComponentProps> = props => {
     }
 
     const deleteSaleHandler = async (id: number) => {
-        await deleteSale(id);
-        fetchProducts();
+        const confirmationAlert = await Swal.fire({
+            title: 'Eliminar proveedor',
+            icon: 'question',
+            text: '¿Estás seguro de que quieres eliminar esta venta?',
+            confirmButtonText: 'Si, borrar',
+            confirmButtonColor: 'green',
+            showCancelButton: true,
+            cancelButtonText: 'No, cancelar',
+            cancelButtonColor: 'red',
+        });
+
+        if (confirmationAlert.value === confirmationAlert.isConfirmed) {
+            const { error, message } = await deleteSale(id);
+            if (error)
+                toast.error(message, options);
+            else {
+                toast.success(message, options);
+                fetchProducts();
+            }
+        }
     };
 
     return (

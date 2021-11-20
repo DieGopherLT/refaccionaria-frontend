@@ -27,14 +27,14 @@ const SaleState: FC = ({ children }) => {
 
     const postSale = async (sale: SaleDTO) => {
         try {
-            await AxiosClient.post<GenericResponse>('/sale', sale, {
+            const response = await AxiosClient.post<GenericResponse>('/sale', sale, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
-            fetchSales();
+            return response.data;
         } catch(e: any) {
-            console.log(e.response.data);
+            return e.response.data;
         }
     }
 
@@ -42,23 +42,24 @@ const SaleState: FC = ({ children }) => {
 
     const updateSale = async (data: SaleDTO, sale: Sale) => {
         try {
-            console.log(data);
-            await AxiosClient.put<GenericResponse>(`/sale?id=${sale.sale_id}`, data, {
+            const response = await AxiosClient.put<GenericResponse>(`/sale?id=${sale.sale_id}`, data, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
+            return response.data;
         } catch(e: any) {
-            console.log(e.response.data);
+            return e.response.data;
         }
     }
 
     const deleteSale = async (saleId: number) => {
         try {
-            await AxiosClient.delete<GenericResponse>(`/sale?id=${saleId}`);
+            const response = await AxiosClient.delete<GenericResponse>(`/sale?id=${saleId}`);
             dispatch({ type: 'DELETE_SALE', payload: saleId });
+            return response.data;
         } catch(e: any) {
-            console.log(e.response.data);
+            return e.response.data;
         }
     }
 

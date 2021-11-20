@@ -1,5 +1,6 @@
 import React, { FC, useState, useEffect, useContext, FormEvent, ChangeEvent } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import SaleContext from '../../context/Sales/SaleContext';
 import ProductContext from '../../context/Product/ProductContext';
@@ -15,6 +16,7 @@ import Button from '../../components/UI/Button';
 
 import { Option } from '../../types/Form';
 import { SaleDTO } from '../../types/Api';
+import { ToastAlertOptions as options } from '../../data/ToastAlert';
 
 const SaleForm: FC<RouteComponentProps> = props => {
 
@@ -44,19 +46,28 @@ const SaleForm: FC<RouteComponentProps> = props => {
 
         if (editingSale === null) {
             postSale(sale)
-                .then(() => {
-                    fetchSales();
-                    fetchProducts();
-                    props.history.push('/');
+                .then(({ error, message }) => {
+                    if (error) {
+                        toast.error(message, options);
+                        return;
+                    }
+                    else
+                        toast.success(message, options);
                 });
         } else {
             updateSale(sale, editingSale)
-                .then(() => {
-                    fetchSales();
-                    fetchProducts();
-                    props.history.push('/');
+                .then(({ error, message }) => {
+                    if (error) {
+                        toast.error(message, options);
+                        return;
+                    }
+                    else
+                        toast.success(message, options);
                 });
         }
+        fetchSales();
+        fetchProducts();
+        props.history.push('/');
     }
 
     const handleProductChange = (event: ChangeEvent<HTMLSelectElement>) => {
