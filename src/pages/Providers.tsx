@@ -24,7 +24,7 @@ const Providers: FC<RouteComponentProps> = props => {
     }
 
     const deleteP = async (id: number) => {
-        const promptResponse = await Swal.fire({
+        const confirmationResult = await Swal.fire({
             title: 'Eliminar proveedor',
             icon: 'question',
             text: '¿Estás seguro de que quieres eliminar este proveedor?',
@@ -35,7 +35,7 @@ const Providers: FC<RouteComponentProps> = props => {
             cancelButtonColor: 'red',
         });
 
-        if (promptResponse.value === promptResponse.isConfirmed) {
+        if (confirmationResult.value === confirmationResult.isConfirmed) {
             const response = await deleteProvider(id);
             if (response.error)
                 toast.error(response.message, options);
@@ -59,8 +59,9 @@ const Providers: FC<RouteComponentProps> = props => {
                         <tr>
                             <th className="p-1 border border-blue-600 lg:w-3">ID</th>
                             <th className="p-1 border border-blue-600 lg:w-16">Nombre</th>
-                            <th className="p-1 border border-blue-600 lg:w-24">Correo</th>
+                            <th className="p-1 border border-blue-600 lg:w-16">Correo</th>
                             <th className="p-1 border border-blue-600 lg:w-12">Teléfono</th>
+                            <th className="p-1 border border-blue-600 lg:w-20">Dirección</th>
                             <th className="p-1 border border-blue-600 lg:w-12">Empresa</th>
                             <th className="p-1 border border-blue-600 lg:w-28">Acciones</th>
                         </tr>
@@ -72,6 +73,7 @@ const Providers: FC<RouteComponentProps> = props => {
                                 <td className="p-1 border border-blue-600">{ provider.name }</td>
                                 <td className="p-1 border border-blue-600">{ provider.email }</td>
                                 <td className="p-1 border border-blue-600">{ provider.phone }</td>
+                                <td className="p-1 border border-blue-600">{ provider.address }</td>
                                 <td className="p-1 border border-blue-600">{ provider.enterprise }</td>
                                 <td className="p-1 border border-blue-600">
                                     <div className="flex justify-around gap-2 lg:gap-0">

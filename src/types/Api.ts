@@ -64,6 +64,8 @@ export interface ProviderDTO {
     name: string;
     phone: string;
     enterprise: string;
+    address: string;
+    provider_price: number;
 }
 
 export interface Provider extends ProviderDTO{

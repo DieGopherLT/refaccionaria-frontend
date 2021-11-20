@@ -28,6 +28,8 @@ const ProviderForm: FC<RouteComponentProps> = props => {
         email: editingProvider?.email || '',
         phone: editingProvider?.phone || '',
         enterprise: editingProvider?.enterprise || '',
+        address: editingProvider?.address || '',
+        provider_price: editingProvider?.provider_price || 0
     });
 
     useEffect(() => {
@@ -40,6 +42,9 @@ const ProviderForm: FC<RouteComponentProps> = props => {
 
     const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+
+        formData.provider_price = parseInt(formData.provider_price.toString());
+
         if (editingProvider === null) {
             postProvider(formData)
                 .then(({ error, message }) => {
@@ -99,18 +104,34 @@ const ProviderForm: FC<RouteComponentProps> = props => {
                     />
                     <Input
                         type="text"
+                        label="Dirección"
+                        id="address"
+                        placeholder="Dirección del proveedor"
+                        value={ formData.address }
+                        onChange={ event => handleChange(event, 'address') }
+                    />
+                    <Input
+                        type="text"
                         label="Empresa"
                         id="enterprise"
                         placeholder="Empresa del proveedor"
                         value={ formData.enterprise }
                         onChange={ event => handleChange(event, 'enterprise') }
                     />
+                    <Input
+                        type="number"
+                        label="Precio"
+                        id="price"
+                        placeholder="Precio de sus productos"
+                        value={ formData.provider_price.toString() }
+                        onChange={ event => handleChange(event, 'provider_price') }
+                    />
                     <div className="w-full md:flex md:justify-center">
                         <Button
                             className="md:w-44"
                             color="blue"
                             type="submit"
-                            text={ editingProvider ? 'Guardar cambios' : 'Agregar producto' }
+                            text={ editingProvider ? 'Guardar cambios' : 'Agregar proveedor' }
                         />
                     </div>
                 </Form>
