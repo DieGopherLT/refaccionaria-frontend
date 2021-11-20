@@ -17,6 +17,7 @@ import ProductState from './context/Product/ProductState';
 import ProviderState from './context/Provider/ProviderState';
 import SaleState from './context/Sales/SaleState';
 import DeliveryState from './context/Delivery/DeliveryState';
+import ClientState from './context/Client/ClientState';
 
 import Wrapper from './components/UI/Wrapper';
 import Navigation from './components/Navbar/Navigation';
@@ -26,37 +27,39 @@ import { navData } from './data/Navigation';
 function App() {
     return (
         <Router>
-            <DeliveryState>
-                <SaleState>
-                    <ProviderState>
-                        <ProductState>
-                            <ToastContainer />
-                            <AppContainer>
-                                <div className="h-20 bg-blue-900 lg:h-full">
-                                    <Wrapper className="h-full">
-                                        <Navigation data={ navData }/>
-                                    </Wrapper>
-                                </div>
+            <ClientState>
+                <DeliveryState>
+                    <SaleState>
+                        <ProviderState>
+                            <ProductState>
+                                <ToastContainer/>
+                                <AppContainer>
+                                    <div className="h-20 bg-blue-900 lg:h-full">
+                                        <Wrapper className="h-full">
+                                            <Navigation data={ navData }/>
+                                        </Wrapper>
+                                    </div>
 
-                                <Switch>
-                                    <Route exact path="/" component={ Home }/>
-                                    <Route exact path="/ventas/nuevo" component={ SaleForm }/>
-                                    <Route exact path="/ventas/resumen" component={ SaleSummary }/>
+                                    <Switch>
+                                        <Route exact path="/" component={ Home }/>
+                                        <Route exact path="/ventas/nuevo" component={ SaleForm }/>
+                                        <Route exact path="/ventas/resumen" component={ SaleSummary }/>
 
-                                    <Route exact path="/productos" component={ Products }/>
-                                    <Route exact path="/productos/nuevo" component={ ProductForm }/>
+                                        <Route exact path="/productos" component={ Products }/>
+                                        <Route exact path="/productos/nuevo" component={ ProductForm }/>
 
-                                    <Route exact path="/proveedores" component={ Providers }/>
-                                    <Route exact path="/proveedores/nuevo" component={ ProviderForm }/>
+                                        <Route exact path="/proveedores" component={ Providers }/>
+                                        <Route exact path="/proveedores/nuevo" component={ ProviderForm }/>
 
-                                    <Route exact path="/entregas" component={ Deliveries }/>
-                                    <Route exact path="/entregas/nuevo" component={ DeliveryForm }/>
-                                </Switch>
-                            </AppContainer>
-                        </ProductState>
-                    </ProviderState>
-                </SaleState>
-            </DeliveryState>
+                                        <Route exact path="/entregas" component={ Deliveries }/>
+                                        <Route exact path="/entregas/nuevo" component={ DeliveryForm }/>
+                                    </Switch>
+                                </AppContainer>
+                            </ProductState>
+                        </ProviderState>
+                    </SaleState>
+                </DeliveryState>
+            </ClientState>
         </Router>
     );
 }
