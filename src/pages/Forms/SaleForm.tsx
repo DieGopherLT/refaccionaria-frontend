@@ -112,7 +112,10 @@ const SaleForm: FC<RouteComponentProps> = props => {
                         onChange={ event => handleChange(event, 'amount') }
                     />
                     <p className={ `${product_id !== '' ? 'block' : 'hidden'} text-lg` }>
-                        <span className="font-bold">Total a pagar:</span> { amount * price }
+                        <span className="font-bold">Subtotal:</span> { amount * price }
+                    </p>
+                    <p className={ `${product_id !== '' ? 'block' : 'hidden'} text-lg` }>
+                        <span className="font-bold">Total a pagar:</span> { (amount * price * 1.16).toFixed(2) }
                     </p>
                     <div className="w-full md:flex md:justify-center">
                         <Button
