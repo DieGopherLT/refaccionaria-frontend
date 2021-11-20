@@ -1,5 +1,7 @@
 import React, { FC, useContext } from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
 
 import ProductContext from '../context/Product/ProductContext';
 import ProviderContext from '../context/Provider/ProviderContext';
@@ -9,6 +11,7 @@ import PageContainer from '../components/UI/PageContainer';
 import Button from '../components/UI/Button';
 
 import { Provider } from '../types/Api';
+import { ToastAlertOptions as options } from '../data/ToastAlert';
 
 const Providers: FC<RouteComponentProps> = props => {
 
@@ -21,8 +24,27 @@ const Providers: FC<RouteComponentProps> = props => {
     }
 
     const deleteP = async (id: number) => {
-        await deleteProvider(id);
-        fetchBrands();
+        const promptResponse = await Swal.fire({
+            title: 'Eliminar proveedor',
+            icon: 'question',
+            text: '¿Estás seguro de que quieres eliminar este proveedor?',
+            confirmButtonText: 'Si, borrar',
+            confirmButtonColor: 'green',
+            showCancelButton: true,
+            cancelButtonText: 'No, cancelar',
+            cancelButtonColor: 'red',
+        });
+
+        if (promptResponse.value === promptResponse.isConfirmed) {
+            alert('Se borro');
+            const response = await deleteProvider(id);
+
+            if (response.error)
+                toast.error(response.message, options);
+            else
+                toast.success(response.message, options);
+            fetchBrands();
+        }
     }
 
     return (

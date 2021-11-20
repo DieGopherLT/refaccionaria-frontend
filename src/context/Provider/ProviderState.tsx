@@ -32,8 +32,9 @@ const ProviderState: FC = ({ children }) => {
                 }
             });
             dispatch({ type: 'POST_PROVIDER', payload: info.data });
-        } catch(e) {
-            console.log(e);
+            return info.data;
+        } catch(e: any) {
+            return e.respose.data;
         }
     }
 
@@ -50,8 +51,9 @@ const ProviderState: FC = ({ children }) => {
                 }
             });
             dispatch({ type: 'UPDATE_PROVIDER', payload: { provider, response: info.data } });
+            return info.data;
         } catch(e: any) {
-            console.log(e.response);
+            return e.response.data;
         }
     }
 
@@ -59,8 +61,9 @@ const ProviderState: FC = ({ children }) => {
         try {
             const info = await AxiosClient.delete<GenericResponse>(`/provider?id=${id}`);
             dispatch({ type: 'DELETE_PROVIDER', payload: { id, response: info.data } });
-        } catch(e) {
-            console.log(e);
+            return info.data;
+        } catch(e: any) {
+            return e.response.data;
         }
     }
 

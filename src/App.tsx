@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 import AppContainer from './components/UI/AppContainer';
 import Home from './pages/Home';
@@ -29,6 +30,7 @@ function App() {
                 <SaleState>
                     <ProviderState>
                         <ProductState>
+                            <ToastContainer />
                             <AppContainer>
                                 <div className="h-20 bg-blue-900 lg:h-full">
                                     <Wrapper className="h-full">
