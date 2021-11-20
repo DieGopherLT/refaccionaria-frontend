@@ -1,6 +1,7 @@
 import React, { FC, useState, useEffect, useContext, FormEvent, ChangeEvent } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 
 import SaleContext from '../../context/Sales/SaleContext';
 import ProductContext from '../../context/Product/ProductContext';
@@ -28,6 +29,13 @@ const SaleForm: FC<RouteComponentProps> = props => {
         amount: editingSale?.amount || 0
     });
     const [price, setPrice] = useState<number>(editingSale?.product.price || 0);
+
+    useEffect(() => {
+        if (products.length === 0) {
+            Swal.fire('No hay productos', 'Agrega un producto primero antes de realizar una venta.', 'warning')
+                .then(() => props.history.push('/productos'))
+        }
+    }, []);
 
     useEffect(() => {
         return () => {

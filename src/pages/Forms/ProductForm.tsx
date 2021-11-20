@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useContext, useMemo, FormEvent } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 
 import useForm from '../../hooks/useForm';
 
@@ -34,6 +35,14 @@ const ProductForm: FC<RouteComponentProps> = props => {
         category_id: editingProduct?.category.category_id || 0,
         provider_id: editingProduct?.provider.provider_id || 0,
     });
+
+    useEffect(() => {
+        if (providers.length === 0) {
+            Swal.fire('No hay proveedores', 'Agrega un proveedor primero antes de agregar un producto.', 'warning')
+                .then(() => props.history.push('/productos'))
+        }
+    }, []);
+
 
     useEffect(() => {
         return () => {

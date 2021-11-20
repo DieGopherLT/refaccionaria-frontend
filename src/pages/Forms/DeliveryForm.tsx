@@ -1,4 +1,4 @@
-import React, { FC, useState, useContext, FormEvent } from 'react';
+import React, { FC, useState, useContext, FormEvent, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import { RouteComponentProps } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -18,6 +18,7 @@ import Button from '../../components/UI/Button';
 import { Option } from '../../types/Form';
 import { DeliveryDTO } from '../../types/Api';
 import { ToastAlertOptions as options } from '../../data/ToastAlert';
+import Swal from 'sweetalert2';
 
 const DeliveryForm: FC<RouteComponentProps> = props => {
 
@@ -31,6 +32,13 @@ const DeliveryForm: FC<RouteComponentProps> = props => {
     });
 
     const [date, setDate] = useState<any>(new Date());
+
+    useEffect(() => {
+        if (products.length === 0) {
+            Swal.fire('No hay productos', 'No se pueden realizar ordenes sin productos que ordenar.', 'warning')
+                .then(() => props.history.push('/entregas'))
+        }
+    }, []);
 
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
