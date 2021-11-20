@@ -1,5 +1,6 @@
 import React, { FC, useContext } from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import ProductContext from '../context/Product/ProductContext';
 import DeliveryContext from '../context/Delivery/DeliveryContext';
@@ -8,13 +9,20 @@ import PageContainer from '../components/UI/PageContainer';
 import Wrapper from '../components/UI/Wrapper';
 import Button from '../components/UI/Button';
 
+import { ToastAlertOptions as options } from '../data/ToastAlert';
+
 const Deliveries: FC<RouteComponentProps> = props => {
 
     const { fetchProducts } = useContext(ProductContext);
     const { deliveries, deleteDelivery } = useContext(DeliveryContext);
 
     const deleteDeli = async (productId: number, providerId: number) => {
-        await deleteDelivery(productId, providerId);
+        const { error, message } = await deleteDelivery(productId, providerId);
+        if (error) {
+            toast.error(message, options);
+            return;
+        }
+        toast.success(message, options);
         fetchProducts();
     }
 

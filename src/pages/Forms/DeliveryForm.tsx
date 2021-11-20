@@ -1,6 +1,7 @@
 import React, { FC, useState, useContext, FormEvent } from 'react';
 import DatePicker from 'react-datepicker';
 import { RouteComponentProps } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import useForm from '../../hooks/useForm';
 
@@ -16,6 +17,7 @@ import Button from '../../components/UI/Button';
 
 import { Option } from '../../types/Form';
 import { DeliveryDTO } from '../../types/Api';
+import { ToastAlertOptions as options } from '../../data/ToastAlert';
 
 const DeliveryForm: FC<RouteComponentProps> = props => {
 
@@ -44,8 +46,13 @@ const DeliveryForm: FC<RouteComponentProps> = props => {
         }
 
         postDelivery(delivery)
-            .then(() => {
+            .then(({ error, message }) => {
+                if (error) {
+                    toast.error(message, options);
+                    return;
+                }
                 fetchDeliveries();
+                toast.success(message, options);
                 props.history.push('/entregas');
             })
     }

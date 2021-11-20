@@ -1,11 +1,11 @@
 import { createContext } from 'react';
 import { DeliveryReducerState } from './DeliveryReducer';
-import { DeliveryDTO } from '../../types/Api';
+import { DeliveryDTO, GenericResponse } from '../../types/Api';
 
 interface DeliveryContextProps extends DeliveryReducerState{
     fetchDeliveries: () => void;
-    postDelivery: (delivery: DeliveryDTO) => Promise<void>;
-    deleteDelivery: (productId: number, providerId: number) => Promise<void>;
+    postDelivery: (delivery: DeliveryDTO) => Promise<GenericResponse>;
+    deleteDelivery: (productId: number, providerId: number) => Promise<GenericResponse>;
 }
 
 const DeliveryContext = createContext<DeliveryContextProps>({} as DeliveryContextProps);

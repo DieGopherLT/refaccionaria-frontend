@@ -26,22 +26,24 @@ const DeliveryState: FC = ({ children }) => {
 
     const postDelivery = async (delivery: DeliveryDTO) => {
         try {
-            await AxiosClient.post<GenericResponse>('/delivery', delivery, {
+            const response = await AxiosClient.post<GenericResponse>('/delivery', delivery, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
+            return response.data;
         } catch(e: any) {
-            console.log(e.response.data);
+            return e.response.data;
         }
     }
 
     const deleteDelivery = async (productId: number, providerId: number) => {
         try {
-            await AxiosClient.delete(`/delivery?productId=${productId}&providerId=${providerId}`);
+            const response = await AxiosClient.delete(`/delivery?productId=${productId}&providerId=${providerId}`);
             dispatch({ type: 'DELETE_DELIVERY', payload: { productId, providerId } });
+            return response.data;
         } catch(e: any) {
-            console.log(e.response.data);
+            return e.response.data;
         }
     }
 
