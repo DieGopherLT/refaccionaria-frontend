@@ -20,7 +20,7 @@ const Products: FC<ProductsProps> = props => {
 
     const deleteProductRequest = async (id: number) => {
         const promptResponse = await Swal.fire({
-            title: 'Eliminar proveedor',
+            title: 'Eliminar producto',
             icon: 'question',
             text: '¿Estás seguro de que quieres eliminar este producto?',
             confirmButtonText: 'Si, borrar',

@@ -57,7 +57,22 @@ const ProductForm: FC<RouteComponentProps> = props => {
         formData.price = parseFloat(formData.price.toString());
         formData.amount = parseInt(formData.amount.toString());
         formData.category_id = parseInt(formData.category_id.toString());
-        formData.provider_id = parseInt(formData.provider_id.toString());
+        formData.provider_id = parseInt(formData.provider_id.toString())
+
+        switch (true) {
+            case Object.values(formData).some(field => field === ''):
+                toast.error('Todos los campos son obligatorios', options);
+                return;
+            case isNaN(formData.provider_id):
+                toast.warning('Agregue un proveedor', options);
+                return;
+            case isNaN(formData.category_id):
+                toast.warning('Agregue una categoría', options);
+                return;
+            case formData.price === 0 || formData.price.toString() === '':
+                toast.warning('Agregue un precio mayor a cero', options);
+                return;
+        }
 
         if (editingProduct === null) {
             postProduct(formData)
@@ -66,9 +81,8 @@ const ProductForm: FC<RouteComponentProps> = props => {
                         toast.error(message, options);
                         return
                     }
-                    fetchProducts();
-                    props.history.push('/productos');
                     toast.success(message, options);
+                    fetchProducts();
                 });
         } else {
             updateProduct(editingProduct, formData)
@@ -77,11 +91,11 @@ const ProductForm: FC<RouteComponentProps> = props => {
                         toast.error(message, options);
                         return
                     }
-                    fetchProducts();
-                    props.history.push('/productos');
                     toast.success(message, options);
+                    fetchProducts();
                 });
         }
+        props.history.push('/productos');
     }
 
     const brandOptions: Option[] = brands.map(brand => {
@@ -148,22 +162,27 @@ const ProductForm: FC<RouteComponentProps> = props => {
                         value={ formData.price.toString() }
                         onChange={ event => handleChange(event, 'price') }
                     />
-                    <Input
-                        type="number"
-                        label="Cantidad"
-                        id="amount"
-                        placeholder="Cantidad inicial del producto, por defecto es cero"
-                        value={ formData.amount.toString() }
-                        onChange={ event => handleChange(event, 'amount') }
-                    />
-                    <textarea
-                        name="description"
-                        id="description"
-                        placeholder="Descripcion del producto"
-                        className="w-full border border-black p-2 my-2"
-                        value={ formData.description }
-                        onChange={ event => handleChange(event, 'description') }
-                    />
+                    { editingProduct === null &&
+                        <Input
+                            type="number"
+                            label="Cantidad"
+                            id="amount"
+                            placeholder="Cantidad inicial del producto, por defecto es cero"
+                            value={ formData.amount.toString() }
+                            onChange={ event => handleChange(event, 'amount') }
+                        />
+                    }
+                    <div className="flex flex-col">
+                        <label htmlFor="description">Descripción</label>
+                        <textarea
+                            name="description"
+                            id="description"
+                            placeholder="Descripcion del producto"
+                            className="w-full border border-black p-2 my-2"
+                            value={ formData.description }
+                            onChange={ event => handleChange(event, 'description') }
+                        />
+                    </div>
                     <div className="w-full md:flex md:justify-center">
                         <Button
                             className="md:w-44"
