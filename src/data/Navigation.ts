@@ -4,7 +4,8 @@ import {
     FaHome,
     FaShoppingCart,
     FaTruckLoading,
-    FaTruckMoving
+    FaTruckMoving,
+    FaUserAlt
 } from 'react-icons/fa';
 
 const props = {
@@ -17,7 +18,13 @@ export const navData: NavigationItemData[] = [
         label: 'Inicio',
         Icon: FaHome,
         props
-    }, 
+    },
+    {
+        href: '/clientes',
+        label: 'Clientes',
+        Icon: FaUserAlt,
+        props
+    },
     {
         href: '/productos',
         label: 'Productos',
