@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useContext } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import useForm from '../../hooks/useForm';
 
@@ -13,6 +14,7 @@ import Input from '../../components/Form/Input';
 import Button from '../../components/UI/Button';
 
 import { ProviderDTO } from '../../types/Api';
+import { ToastAlertOptions as options } from '../../data/ToastAlert';
 
 const ProviderForm: FC<RouteComponentProps> = props => {
 
@@ -40,20 +42,28 @@ const ProviderForm: FC<RouteComponentProps> = props => {
         event.preventDefault();
         if (editingProvider === null) {
             postProvider(formData)
-                .then(() => {
-                    fetchProviders();
-                    fetchBrands();
+                .then(({ error, message }) => {
+                    if(error) {
+                        toast.error(message, options)
+                        return;
+                    }
                     props.history.push('/proveedores');
-                });
+                    toast.success(message, options);
+                })
         } else {
             editProvider({ ...formData, provider_id: editingProvider.provider_id })
-                .then(() => {
+                .then(({ error, message }) => {
+                    if (error) {
+                        toast.error(message, options);
+                        return;
+                    }
                     setEditingProvider(null);
-                    fetchProviders();
-                    fetchBrands();
                     props.history.push('/proveedores');
-                })
+                    toast.success(message, options);
+                });
         }
+        fetchProviders();
+        fetchBrands();
     }
 
     return (

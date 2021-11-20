@@ -34,7 +34,7 @@ const ProviderState: FC = ({ children }) => {
             dispatch({ type: 'POST_PROVIDER', payload: info.data });
             return info.data;
         } catch(e: any) {
-            return e.respose.data;
+            return e.response.data;
         }
     }
 

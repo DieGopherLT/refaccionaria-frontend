@@ -36,9 +36,7 @@ const Providers: FC<RouteComponentProps> = props => {
         });
 
         if (promptResponse.value === promptResponse.isConfirmed) {
-            alert('Se borro');
             const response = await deleteProvider(id);
-
             if (response.error)
                 toast.error(response.message, options);
             else
