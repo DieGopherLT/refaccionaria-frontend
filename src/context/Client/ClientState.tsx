@@ -4,13 +4,14 @@ import AxiosClient from '../../config/axios';
 import ClientContext from './ClientContext';
 import ClientReducer, { ClientReducerState } from './ClientReducer';
 
-import { ClientDTO, ClientGetResponse, GenericResponse } from '../../types/Api';
+import { Client, ClientDTO, ClientGetResponse, GenericResponse } from '../../types/Api';
 
 const ClientState: FC = ({ children }) => {
 
     const initialState: ClientReducerState = {
         clients: [],
         shouldFetchClients: true,
+        editingClient: null
     }
 
     const [state, dispatch] = useReducer(ClientReducer, initialState);
@@ -38,6 +39,22 @@ const ClientState: FC = ({ children }) => {
         }
     }
 
+    const setEditingClient = (data: Client | null) => dispatch({ type: 'SET_EDITING_CLIENT', payload: data });
+
+    const updateClient = async (data: Client) => {
+        try {
+            const response = await AxiosClient.put<GenericResponse>(`/client/${data.client_id}`, data, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            dispatch({ type: 'UPDATE_CLIENT', payload: data });
+            return response.data;
+        } catch(e: any) {
+            return e.response.data;
+        }
+    }
+
     const deleteClient = async (clientId: number) => {
         try {
             const response = await AxiosClient.delete<GenericResponse>(`/client/${clientId}`);
@@ -52,8 +69,11 @@ const ClientState: FC = ({ children }) => {
         <ClientContext.Provider
             value={{
                 clients: state.clients,
+                editingClient: state.editingClient,
                 fetchClients,
                 postClient,
+                setEditingClient,
+                updateClient,
                 deleteClient
             }}
         >

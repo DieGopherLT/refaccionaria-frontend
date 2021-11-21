@@ -16,7 +16,7 @@ const SaleSummary = () => {
 
     useEffect(() => {
         if (products.length > 0 && sales.length > 0) {
-            const dictionary: {[key: string]: number} = {}
+            const dictionary: Record<string, number> = {}
 
             products.forEach(product => {
                 let salesTotalAmount = 0;

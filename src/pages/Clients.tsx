@@ -9,11 +9,17 @@ import PageContainer from '../components/UI/PageContainer';
 import Wrapper from '../components/UI/Wrapper';
 import Button from '../components/UI/Button';
 
+import { Client } from '../types/Api';
 import { ToastAlertOptions as options } from '../data/ToastAlert';
 
 const Clients: FC<RouteComponentProps> = props => {
 
-    const { clients, deleteClient } = useContext(ClientContext);
+    const { clients, setEditingClient, deleteClient } = useContext(ClientContext);
+
+    const editClientHandler = (client: Client) => {
+        setEditingClient(client);
+        props.history.push('/clientes/nuevo');
+    }
 
     const deleteClientHandler = async (clientId: number) => {
         const confirmationAlert = await Swal.fire({
@@ -70,6 +76,7 @@ const Clients: FC<RouteComponentProps> = props => {
                                                 color="yellow"
                                                 type="button"
                                                 text="Editar"
+                                                onClick={ () => editClientHandler(client) }
                                             />
                                         </div>
                                         <div className="w-full md:w-28">

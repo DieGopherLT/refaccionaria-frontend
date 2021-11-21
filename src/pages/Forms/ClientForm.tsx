@@ -1,4 +1,4 @@
-import React, { FC, useContext, FormEvent } from 'react';
+import React, { FC, useEffect, useContext, FormEvent } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -17,34 +17,56 @@ import { ToastAlertOptions as options } from '../../data/ToastAlert';
 
 const ClientForm: FC<RouteComponentProps> = props => {
 
-    const { fetchClients, postClient } = useContext(ClientContext);
+    const { editingClient, fetchClients, postClient, setEditingClient, updateClient } = useContext(ClientContext);
 
     const { formData, handleChange } = useForm<ClientDTO>({
-        name: '',
-        address: '',
-        phone: ''
+        name: editingClient?.name || '',
+        address: editingClient?.address || '',
+        phone: editingClient?.phone || ''
     });
+
+    useEffect(() => {
+        return () => {
+            if (editingClient !== null)
+                setEditingClient(null);
+        }
+    }, []);
+
 
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        postClient(formData)
-            .then(({ error, message }) => {
-                if (error) {
-                    toast.error(message, options);
-                    return;
-                }
-                fetchClients();
-                toast.success(message, options);
-                props.history.push('/clientes');
-            });
+        if (editingClient === null) {
+            postClient(formData)
+                .then(({ error, message }) => {
+                    if (error) {
+                        toast.error(message, options);
+                        return;
+                    }
+                    fetchClients();
+                    toast.success(message, options);
+                });
+        }
+        else {
+            updateClient({ ...formData, client_id: editingClient.client_id })
+                .then(({ error, message }) => {
+                    if (error) {
+                        toast.error(message, options);
+                        return;
+                    }
+                    toast.success(message, options);
+                })
+        }
+        props.history.push('/clientes');
     }
 
     return (
         <PageContainer>
             <Wrapper className="max-w-3xl mt-10">
                 <Form onSubmit={ onSubmit } >
-                    <h2 className="text-center text-2xl font-bold">Nuevo cliente</h2>
+                    <h2 className="text-center text-2xl font-bold">
+                        { editingClient ? 'Modificar cliente' : 'Nuevo cliente' }
+                    </h2>
                     <Input
                         type="text"
                         label="Nombre"
@@ -74,7 +96,7 @@ const ClientForm: FC<RouteComponentProps> = props => {
                             className="md:w-44"
                             color="blue"
                             type="submit"
-                            text="Agregar cliente"
+                            text={ editingClient ? 'Guardar cambios' : 'Agregar cliente' }
                         />
                     </div>
                 </Form>
