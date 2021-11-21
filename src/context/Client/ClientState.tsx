@@ -38,12 +38,23 @@ const ClientState: FC = ({ children }) => {
         }
     }
 
+    const deleteClient = async (clientId: number) => {
+        try {
+            const response = await AxiosClient.delete<GenericResponse>(`/client/${clientId}`);
+            dispatch({ type: 'DELETE_CLIENT', payload: clientId });
+            return response.data;
+        } catch(e: any) {
+            return e.response.data;
+        }
+    }
+
     return (
         <ClientContext.Provider
             value={{
                 clients: state.clients,
                 fetchClients,
-                postClient
+                postClient,
+                deleteClient
             }}
         >
             { children }

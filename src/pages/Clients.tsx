@@ -1,5 +1,7 @@
 import React, { FC, useContext } from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
 
 import ClientContext from '../context/Client/ClientContext';
 
@@ -7,9 +9,33 @@ import PageContainer from '../components/UI/PageContainer';
 import Wrapper from '../components/UI/Wrapper';
 import Button from '../components/UI/Button';
 
+import { ToastAlertOptions as options } from '../data/ToastAlert';
+
 const Clients: FC<RouteComponentProps> = props => {
 
-    const { clients } = useContext(ClientContext);
+    const { clients, deleteClient } = useContext(ClientContext);
+
+    const deleteClientHandler = async (clientId: number) => {
+        const confirmationAlert = await Swal.fire({
+            title: 'Eliminar cliente',
+            icon: 'question',
+            text: '¿Estás seguro de que quieres eliminar este cliente?',
+            confirmButtonText: 'Si, borrar',
+            confirmButtonColor: 'green',
+            showCancelButton: true,
+            cancelButtonText: 'No, cancelar',
+            cancelButtonColor: 'red',
+        });
+
+        if (confirmationAlert.value === confirmationAlert.isConfirmed) {
+            const { error, message } = await deleteClient(clientId);
+            if (error) {
+                toast.error(message, options);
+                return;
+            }
+            toast.success(message, options);
+        }
+    }
 
     return (
         <PageContainer>
@@ -27,7 +53,7 @@ const Clients: FC<RouteComponentProps> = props => {
                             <th className="p-1 border border-blue-600 lg:w-14">Nombre</th>
                             <th className="p-1 border border-blue-600 lg:w-16">Dirección</th>
                             <th className="p-1 border border-blue-600 lg:w-14">Teléfono</th>
-                            <th className="p-1 border border-blue-600 lg:w-28">Acciones</th>
+                            <th className="p-1 border border-blue-600 lg:w-20">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,6 +77,7 @@ const Clients: FC<RouteComponentProps> = props => {
                                                 color="red"
                                                 type="button"
                                                 text="Borrar"
+                                                onClick={ () => deleteClientHandler(client.client_id) }
                                             />
                                         </div>
                                     </div>

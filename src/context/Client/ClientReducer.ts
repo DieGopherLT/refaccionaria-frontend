@@ -8,6 +8,7 @@ export interface ClientReducerState {
 type ClientAction =
     | { type: 'SET_CLIENTS', payload: Client[] }
     | { type: 'FETCH_CLIENTS' }
+    | { type: 'DELETE_CLIENT', payload: number }
 
 export default function reducer(state: ClientReducerState, action: ClientAction): ClientReducerState {
     switch(action.type) {
@@ -21,6 +22,11 @@ export default function reducer(state: ClientReducerState, action: ClientAction)
             return {
                 ...state,
                 shouldFetchClients: true
+            }
+        case 'DELETE_CLIENT':
+            return {
+                ...state,
+                clients: state.clients.filter(client => client.client_id !== action.payload)
             }
         default:
             return state;
