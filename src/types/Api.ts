@@ -105,8 +105,11 @@ export interface DeliveryDTO {
     amount: number;
 }
 
-export interface Client {
+export interface Client extends ClientDTO {
     client_id: number;
+}
+
+export interface ClientDTO {
     name: string;
     address: string;
     phone: string;
