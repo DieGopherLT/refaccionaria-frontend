@@ -18,6 +18,11 @@ export interface DeliveryGetResponse {
     error:      boolean;
 }
 
+export interface ClientGetResponse {
+    clients: Client[]
+    error: boolean;
+}
+
 export interface GenericResponse {
     message: string;
     error: boolean;
@@ -98,4 +103,11 @@ export interface DeliveryDTO {
     provider_id: number;
     delivery_date: Date;
     amount: number;
+}
+
+export interface Client {
+    client_id: number;
+    name: string;
+    address: string;
+    phone: string;
 }
