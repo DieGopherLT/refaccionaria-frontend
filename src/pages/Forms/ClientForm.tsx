@@ -1,4 +1,8 @@
-import React, { FormEvent } from 'react';
+import React, { FC, useContext, FormEvent } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
+import ClientContext from '../../context/Client/ClientContext';
 
 import useForm from '../../hooks/useForm';
 
@@ -9,8 +13,11 @@ import Input from '../../components/Form/Input';
 import Button from '../../components/UI/Button';
 
 import { ClientDTO } from '../../types/Api';
+import { ToastAlertOptions as options } from '../../data/ToastAlert';
 
-const ClientForm = () => {
+const ClientForm: FC<RouteComponentProps> = props => {
+
+    const { fetchClients, postClient } = useContext(ClientContext);
 
     const { formData, handleChange } = useForm<ClientDTO>({
         name: '',
@@ -20,6 +27,17 @@ const ClientForm = () => {
 
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+
+        postClient(formData)
+            .then(({ error, message }) => {
+                if (error) {
+                    toast.error(message, options);
+                    return;
+                }
+                fetchClients();
+                toast.success(message, options);
+                props.history.push('/clientes');
+            });
     }
 
     return (

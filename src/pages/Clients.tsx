@@ -1,10 +1,16 @@
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
+
+import ClientContext from '../context/Client/ClientContext';
 
 import PageContainer from '../components/UI/PageContainer';
 import Wrapper from '../components/UI/Wrapper';
+import Button from '../components/UI/Button';
 
 const Clients: FC<RouteComponentProps> = props => {
+
+    const { clients } = useContext(ClientContext);
+
     return (
         <PageContainer>
             <Wrapper className="max-w-5xl mt-5 flex justify-between md:justify-start gap-2">
@@ -25,7 +31,32 @@ const Clients: FC<RouteComponentProps> = props => {
                         </tr>
                     </thead>
                     <tbody>
-                    
+                        { clients.map((client, index) => (
+                            <tr key={ `${client.client_id}${index}-${client.name}` }>
+                                <td className="p-1 border border-blue-600">{ client.client_id }</td>
+                                <td className="p-1 border border-blue-600">{ client.name }</td>
+                                <td className="p-1 border border-blue-600">{ client.address }</td>
+                                <td className="p-1 border border-blue-600">{ client.phone }</td>
+                                <td className="p-1 border border-blue-600">
+                                    <div className="flex justify-around gap-2 lg:gap-0">
+                                        <div className="w-full md:w-28">
+                                            <Button
+                                                color="yellow"
+                                                type="button"
+                                                text="Editar"
+                                            />
+                                        </div>
+                                        <div className="w-full md:w-28">
+                                            <Button
+                                                color="red"
+                                                type="button"
+                                                text="Borrar"
+                                            />
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        )) }
                     </tbody>
                 </table>
             </Wrapper>

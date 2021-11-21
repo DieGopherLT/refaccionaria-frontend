@@ -4,7 +4,7 @@ import AxiosClient from '../../config/axios';
 import ClientContext from './ClientContext';
 import ClientReducer, { ClientReducerState } from './ClientReducer';
 
-import { ClientGetResponse } from '../../types/Api';
+import { ClientDTO, ClientGetResponse, GenericResponse } from '../../types/Api';
 
 const ClientState: FC = ({ children }) => {
 
@@ -25,11 +25,25 @@ const ClientState: FC = ({ children }) => {
 
     const fetchClients = () => dispatch({ type: 'FETCH_CLIENTS' });
 
+    const postClient = async (client: ClientDTO) => {
+        try {
+            const response = await AxiosClient.post<GenericResponse>('/client', client, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            return response.data;
+        } catch(e: any) {
+            return e.response.data;
+        }
+    }
+
     return (
         <ClientContext.Provider
             value={{
                 clients: state.clients,
-                fetchClients
+                fetchClients,
+                postClient
             }}
         >
             { children }
