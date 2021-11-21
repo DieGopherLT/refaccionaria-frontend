@@ -12,6 +12,8 @@ import Providers from './pages/Providers';
 import ProviderForm from './pages/Forms/ProviderForm';
 import Deliveries from './pages/Deliveries';
 import DeliveryForm from './pages/Forms/DeliveryForm';
+import Clients from './pages/Clients';
+import ClientForm from './pages/Forms/ClientForm';
 
 import ProductState from './context/Product/ProductState';
 import ProviderState from './context/Provider/ProviderState';
@@ -44,6 +46,9 @@ function App() {
                                         <Route exact path="/" component={ Home }/>
                                         <Route exact path="/ventas/nuevo" component={ SaleForm }/>
                                         <Route exact path="/ventas/resumen" component={ SaleSummary }/>
+
+                                        <Route exact path="/clientes" component={ Clients }/>
+                                        <Route exact path="/clientes/nuevo" component={ ClientForm } />
 
                                         <Route exact path="/productos" component={ Products }/>
                                         <Route exact path="/productos/nuevo" component={ ProductForm }/>
