@@ -11,6 +11,7 @@ import Wrapper from '../../components/UI/Wrapper';
 import Form from '../../components/Form/Form';
 import Input from '../../components/Form/Input';
 import Button from '../../components/UI/Button';
+import GoBack from '../../components/UI/GoBack';
 
 import { ClientDTO } from '../../types/Api';
 import { ToastAlertOptions as options } from '../../data/ToastAlert';
@@ -63,8 +64,9 @@ const ClientForm: FC<RouteComponentProps> = props => {
     return (
         <PageContainer>
             <Wrapper className="max-w-3xl mt-10">
+                <GoBack to="/clientes" />
                 <Form onSubmit={ onSubmit } >
-                    <h2 className="text-center text-2xl font-bold">
+                    <h2 className="text-2xl font-bold text-center">
                         { editingClient ? 'Modificar cliente' : 'Nuevo cliente' }
                     </h2>
                     <Input

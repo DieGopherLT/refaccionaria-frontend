@@ -14,6 +14,7 @@ import Form from '../../components/Form/Form';
 import Input from '../../components/Form/Input';
 import Select from '../../components/Form/Select';
 import Button from '../../components/UI/Button';
+import GoBack from '../../components/UI/GoBack';
 
 import { Option } from '../../types/Form';
 import { SaleDTO } from '../../types/Api';
@@ -94,8 +95,9 @@ const SaleForm: FC<RouteComponentProps> = props => {
     return (
         <PageContainer>
             <Wrapper className="max-w-3xl mt-10">
+                <GoBack to="/" />
                 <Form onSubmit={ onSubmit } >
-                    <h2 className="text-center text-2xl font-bold">
+                    <h2 className="text-2xl font-bold text-center">
                         Registrar una nueva venta
                     </h2>
                     <Select

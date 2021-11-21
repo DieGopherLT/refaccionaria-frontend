@@ -14,6 +14,7 @@ import Form from '../../components/Form/Form';
 import Input from '../../components/Form/Input';
 import Select from '../../components/Form/Select';
 import Button from '../../components/UI/Button';
+import GoBack from '../../components/UI/GoBack';
 
 import { Option } from '../../types/Form';
 import { ProductDTO } from '../../types/Api';
@@ -122,8 +123,9 @@ const ProductForm: FC<RouteComponentProps> = props => {
     return (
         <PageContainer>
             <Wrapper className="max-w-3xl mt-10">
+                <GoBack to="/productos" />
                 <Form onSubmit={ onSubmit }>
-                    <h2 className="text-center text-2xl font-bold">
+                    <h2 className="text-2xl font-bold text-center">
                         { editingProduct ? 'Modificar' : 'Nuevo Producto' }
                     </h2>
                     <Input
@@ -178,7 +180,7 @@ const ProductForm: FC<RouteComponentProps> = props => {
                             name="description"
                             id="description"
                             placeholder="Descripcion del producto"
-                            className="w-full border border-black p-2 my-2"
+                            className="w-full p-2 my-2 border border-black"
                             value={ formData.description }
                             onChange={ event => handleChange(event, 'description') }
                         />

@@ -14,6 +14,7 @@ import Form from '../../components/Form/Form';
 import Input from '../../components/Form/Input';
 import Select from '../../components/Form/Select';
 import Button from '../../components/UI/Button';
+import GoBack from '../../components/UI/GoBack';
 
 import { Option } from '../../types/Form';
 import { DeliveryDTO } from '../../types/Api';
@@ -79,9 +80,10 @@ const DeliveryForm: FC<RouteComponentProps> = props => {
     return (
         <PageContainer>
             <Wrapper className="max-w-3xl mt-10">
+                <GoBack to="/entregas" />
                 <Form onSubmit={ onSubmit } >
-                    <h2 className="text-center text-2xl font-bold">Realizar nueva orden</h2>
-                    <div className="flex flex-col md:flex-row justify-between">
+                    <h2 className="text-2xl font-bold text-center">Realizar nueva orden</h2>
+                    <div className="flex flex-col justify-between md:flex-row">
                         <Select
                             label="Producto"
                             value={ formData.productName }
@@ -98,7 +100,7 @@ const DeliveryForm: FC<RouteComponentProps> = props => {
                     <div className="flex flex-col gap-2">
                         <label htmlFor="date">Fecha</label>
                         <DatePicker
-                            className="p-1 pl-2 w-full md:w-auto rounded border border-black"
+                            className="w-full p-1 pl-2 border border-black rounded md:w-auto"
                             id="date"
                             dateFormat="dd/MM/yyyy"
                             dateFormatCalendar="MMM yyyy"

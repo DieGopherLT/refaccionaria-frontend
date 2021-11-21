@@ -12,6 +12,7 @@ import Wrapper from '../../components/UI/Wrapper';
 import Form from '../../components/Form/Form';
 import Input from '../../components/Form/Input';
 import Button from '../../components/UI/Button';
+import GoBack from '../../components/UI/GoBack';
 
 import { ProviderDTO } from '../../types/Api';
 import { ToastAlertOptions as options } from '../../data/ToastAlert';
@@ -74,8 +75,9 @@ const ProviderForm: FC<RouteComponentProps> = props => {
     return (
         <PageContainer>
             <Wrapper className="max-w-3xl mt-10">
+                <GoBack to="/proveedores" />
                 <Form onSubmit={ onSubmit }>
-                    <h2 className="text-center text-2xl font-bold">
+                    <h2 className="text-2xl font-bold text-center">
                         { editingProvider ? 'Modificar proveedor' : 'Nuevo Proveedor' }
                     </h2>
                     <Input
