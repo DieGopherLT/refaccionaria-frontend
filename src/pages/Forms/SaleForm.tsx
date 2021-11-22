@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 
 import SaleContext from '../../context/Sales/SaleContext';
 import ProductContext from '../../context/Product/ProductContext';
+import ClientContext from '../../context/Client/ClientContext';
 
 import useForm from '../../hooks/useForm';
 
@@ -24,16 +25,18 @@ const SaleForm: FC<RouteComponentProps> = props => {
 
     const { editingSale, fetchSales, postSale, setEditingSale, updateSale } = useContext(SaleContext);
     const { products, fetchProducts } = useContext(ProductContext);
+    const { clients } = useContext(ClientContext);
 
-    const { product_id, amount, handleChange } = useForm({
+    const { product_id, client_id, amount, handleChange } = useForm({
         product_id: editingSale?.product.product_id || '',
-        amount: editingSale?.amount || 0
+        amount: editingSale?.amount || 0,
+        client_id: editingSale?.client_id || ''
     });
     const [price, setPrice] = useState<number>(editingSale?.product.price || 0);
 
     useEffect(() => {
-        if (products.length === 0) {
-            Swal.fire('No hay productos', 'Agrega un producto primero antes de realizar una venta.', 'warning')
+        if (products.length === 0 || clients.length === 0) {
+            Swal.fire('No se puede realizar una venta', 'Tiene que existir al menos un cliente y un producto antes de realizar una venta.', 'warning')
                 .then(() => props.history.push('/productos'))
         }
     }, []);
@@ -49,8 +52,10 @@ const SaleForm: FC<RouteComponentProps> = props => {
         event.preventDefault();
         const sale: SaleDTO = {
             product_id: parseInt(product_id.toString()),
+            client_id: parseInt(client_id as string),
             amount: parseInt(amount.toString()),
-            total: amount * price
+            total: amount * price * 1.16,
+            subtotal: amount * price
         }
 
         if (editingSale === null) {
@@ -62,6 +67,8 @@ const SaleForm: FC<RouteComponentProps> = props => {
                     }
                     else
                         toast.success(message, options);
+                    fetchSales();
+                    fetchProducts();
                 });
         } else {
             updateSale(sale, editingSale)
@@ -72,10 +79,10 @@ const SaleForm: FC<RouteComponentProps> = props => {
                     }
                     else
                         toast.success(message, options);
+                        fetchSales();
+                        fetchProducts();
                 });
         }
-        fetchSales();
-        fetchProducts();
         props.history.push('/');
     }
 
@@ -92,6 +99,10 @@ const SaleForm: FC<RouteComponentProps> = props => {
         return { value: product.product_id, label: product.name }
     });
 
+    const clientOpcions: Option[] = clients.map(client => {
+        return { value: client.client_id, label: client.name }
+    });
+
     return (
         <PageContainer>
             <Wrapper className="max-w-3xl mt-10">
@@ -106,6 +117,15 @@ const SaleForm: FC<RouteComponentProps> = props => {
                         value={ product_id }
                         onChange={ handleProductChange }
                     />
+                    {
+                        editingSale === null &&
+                        <Select 
+                            label="Cliente"
+                            options={ clientOpcions }
+                            value={ client_id }
+                            onChange={ event => handleChange(event, 'client_id') }
+                        />
+                    }
                     <Input
                         type="number"
                         label="Cantidad a vender"

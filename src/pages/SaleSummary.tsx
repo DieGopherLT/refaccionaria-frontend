@@ -5,6 +5,7 @@ import ProductContext from '../context/Product/ProductContext';
 
 import PageContainer from '../components/UI/PageContainer';
 import Wrapper from '../components/UI/Wrapper';
+import GoBack from '../components/UI/GoBack';
 
 const SaleSummary = () => {
 
@@ -50,13 +51,14 @@ const SaleSummary = () => {
     return (
         <PageContainer>
             <Wrapper className="max-w-5xl mt-5">
-                <h1 className="text-center font-bold text-3xl">Estadísticas</h1>
+                <GoBack to="/" />
+                <h1 className="text-3xl font-bold text-center">Estadísticas</h1>
                 <div className="flex flex-col mt-5">
-                    <div className="grid grid-cols-2 justify-items-center p-2 border border-black">
+                    <div className="grid grid-cols-2 p-2 border border-black justify-items-center">
                         <p>Total de ingresos generados</p>
                         <p>{ totalGeneratedBySales }</p>
                     </div>
-                    <div className="grid grid-cols-2 justify-items-center p-2 border border-black">
+                    <div className="grid grid-cols-2 p-2 border border-black justify-items-center">
                         <p>Categoría más vendida</p>
                         <p>{ bestSellingCategory  || 'Desconocido' }</p>
                     </div>

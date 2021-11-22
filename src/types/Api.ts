@@ -79,14 +79,18 @@ export interface Provider extends ProviderDTO{
 
 export interface Sale {
     sale_id: number;
+    client_id: number;
     date:    Date;
     amount:  number;
+    subtotal: number;
     total:   number;
     product: Product;
 }
 
 export interface SaleDTO {
     product_id: number;
+    client_id: number;
+    subtotal: number;
     total: number;
     amount: number;
 }

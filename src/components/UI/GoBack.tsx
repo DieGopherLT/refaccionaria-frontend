@@ -10,7 +10,7 @@ const GoBack: FC<GoBackProps> = ({ to }) => {
     return (
         <Link 
             to={ to }
-            className="flex items-center gap-2 h-7"
+            className="flex items-center gap-2 my-2 h-7"
         >
             <FaArrowLeft size={ 20 } />
             <span className="text-lg">Volver atrás</span>

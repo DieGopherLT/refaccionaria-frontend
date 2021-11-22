@@ -25,7 +25,7 @@ const Home: FC<RouteComponentProps> = props => {
 
     const deleteSaleHandler = async (id: number) => {
         const confirmationAlert = await Swal.fire({
-            title: 'Eliminar proveedor',
+            title: 'Eliminar venta',
             icon: 'question',
             text: '¿Estás seguro de que quieres eliminar esta venta?',
             confirmButtonText: 'Si, borrar',
@@ -48,15 +48,15 @@ const Home: FC<RouteComponentProps> = props => {
 
     return (
         <PageContainer>
-            <Wrapper className="max-w-5xl mt-5 flex justify-between md:justify-start gap-2">
+            <Wrapper className="flex justify-between max-w-5xl gap-2 mt-5 md:justify-start">
                 <Link
                     to="/ventas/nuevo"
-                    className="text-white text-center bg-green-500 hover:bg-green-700 p-3 rounded block w-full lg:w-44"
+                    className="block w-full p-3 text-center text-white bg-green-500 rounded hover:bg-green-700 lg:w-44"
                 >Agregar nueva venta</Link>
 
                 <Link
                     to="/ventas/resumen"
-                    className="text-white text-center bg-blue-500 hover:bg-blue-700 p-3 rounded block w-full lg:w-52"
+                    className="block w-full p-3 text-center text-white bg-blue-500 rounded hover:bg-blue-700 lg:w-52"
                 >Ver resumen de ventas</Link>
             </Wrapper>
             <Wrapper className="max-w-5xl mt-5 overflow-x-auto whitespace-nowrap md:whitespace-normal">
