@@ -38,6 +38,7 @@ const ProviderForm: FC<RouteComponentProps> = props => {
             if (editingProvider !== null)
                 setEditingProvider(null);
         };
+    // eslint-disable-next-line
     }, []);
 
 

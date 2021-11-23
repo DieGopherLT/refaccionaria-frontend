@@ -39,6 +39,7 @@ const SaleForm: FC<RouteComponentProps> = props => {
             Swal.fire('No se puede realizar una venta', 'Tiene que existir al menos un cliente y un producto antes de realizar una venta.', 'warning')
                 .then(() => props.history.push('/productos'))
         }
+    // eslint-disable-next-line
     }, []);
 
     useEffect(() => {
@@ -46,6 +47,7 @@ const SaleForm: FC<RouteComponentProps> = props => {
             if (editingSale !== null)
                 setEditingSale(null);
         }
+    // eslint-disable-next-line
     }, [])
 
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -119,7 +121,7 @@ const SaleForm: FC<RouteComponentProps> = props => {
                     />
                     {
                         editingSale === null &&
-                        <Select 
+                        <Select
                             label="Cliente"
                             options={ clientOpcions }
                             value={ client_id }

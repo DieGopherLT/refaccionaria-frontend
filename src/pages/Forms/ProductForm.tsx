@@ -42,6 +42,7 @@ const ProductForm: FC<RouteComponentProps> = props => {
             Swal.fire('No hay proveedores', 'Agrega un proveedor primero antes de agregar un producto.', 'warning')
                 .then(() => props.history.push('/productos'))
         }
+    // eslint-disable-next-line
     }, []);
 
 
@@ -50,6 +51,7 @@ const ProductForm: FC<RouteComponentProps> = props => {
             if (editingProduct !== null)
                 setEditingProduct(null);
         };
+    // eslint-disable-next-line
     }, []);
 
 
@@ -118,7 +120,7 @@ const ProductForm: FC<RouteComponentProps> = props => {
             let opt: Option = { value: category.category_id, label: category.name };
             return opt;
         });
-    }, []);
+    }, [categories]);
 
     return (
         <PageContainer>

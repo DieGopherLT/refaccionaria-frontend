@@ -31,6 +31,7 @@ const ClientForm: FC<RouteComponentProps> = props => {
             if (editingClient !== null)
                 setEditingClient(null);
         }
+    // eslint-disable-next-line
     }, []);
 
 

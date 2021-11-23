@@ -39,6 +39,7 @@ const DeliveryForm: FC<RouteComponentProps> = props => {
             Swal.fire('No hay productos', 'No se pueden realizar ordenes sin productos que ordenar.', 'warning')
                 .then(() => props.history.push('/entregas'))
         }
+    // eslint-disable-next-line
     }, []);
 
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
