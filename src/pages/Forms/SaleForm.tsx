@@ -109,7 +109,7 @@ const SaleForm: FC<RouteComponentProps> = props => {
                 <GoBack to="/" />
                 <Form onSubmit={ onSubmit } >
                     <h2 className="text-2xl font-bold text-center">
-                        Registrar una nueva venta
+                        { editingSale ? 'Modificar venta' : 'Registrar una nueva venta' }
                     </h2>
                     <Select
                         label="Producto"
@@ -143,8 +143,8 @@ const SaleForm: FC<RouteComponentProps> = props => {
                         <Button
                             color="blue"
                             type="submit"
-                            text="Registrar venta"
                             className="md:w-44"
+                            text={ editingSale ? 'Guardar cambios' : 'Registrar venta' }
                         />
                     </div>
                 </Form>
