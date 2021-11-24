@@ -53,17 +53,17 @@ const Providers: FC<RouteComponentProps> = props => {
                     className="text-white text-center bg-green-500 hover:bg-green-700 p-3 rounded block w-full lg:w-52"
                 >Agregar proveedor nuevo</Link>
             </Wrapper>
-            <Wrapper className="max-w-5xl mt-5 overflow-x-auto whitespace-nowrap md:whitespace-normal">
-                <table className="w-full border-collapse lg:table-fixed">
+            <Wrapper className="max-w-5xl mt-5 overflow-x-auto whitespace-normal lg:whitespace-nowrap">
+                <table className="w-full border-collapse lg:table-auto">
                     <thead>
                         <tr>
                             <th className="p-1 border border-blue-600 lg:w-3">ID</th>
                             <th className="p-1 border border-blue-600 lg:w-16">Nombre</th>
-                            <th className="p-1 border border-blue-600 lg:w-16">Correo</th>
+                            <th className="p-1 border border-blue-600 lg:w-20">Correo</th>
                             <th className="p-1 border border-blue-600 lg:w-12">Teléfono</th>
                             <th className="p-1 border border-blue-600 lg:w-20">Dirección</th>
                             <th className="p-1 border border-blue-600 lg:w-12">Empresa</th>
-                            <th className="p-1 border border-blue-600 lg:w-28">Acciones</th>
+                            <th className="p-1 border border-blue-600 lg:w-24">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
