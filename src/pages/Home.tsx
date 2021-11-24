@@ -66,7 +66,7 @@ const Home: FC<RouteComponentProps> = props => {
                             <th className="p-1 border border-blue-600 lg:w-14">Producto</th>
                             <th className="p-1 border border-blue-600 lg:w-14">Marca</th>
                             <th className="p-1 border border-blue-600 lg:w-14">Cantidad</th>
-                            <th className="p-1 border border-blue-600 lg:w-14">Precio</th>
+                            <th className="p-1 border border-blue-600 lg:w-14">Precio c/u</th>
                             <th className="p-1 border border-blue-600 lg:w-14">Total</th>
                             <th className="p-1 border border-blue-600 lg:w-28">Acciones</th>
                         </tr>
