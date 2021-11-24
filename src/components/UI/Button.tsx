@@ -21,12 +21,13 @@ interface ButtonProps {
 const Button: FC<ButtonProps> = ({ color, className, text, type, onClick }) => {
     const bg = `bg-${color}-500`;
     const bgHover = `hover:bg-${color}-700`;
+    const classN = className ? className : '';
 
     return (
         <button
             type={ type }
             onClick={ onClick }
-            className={`py-2 px-4 rounded-md w-full text-white transition-colors duration-300 ${bg} ${bgHover} ${className}`}
+            className={`py-2 px-4 rounded-md w-full text-white transition-colors duration-300 ${bg} ${bgHover} ${classN}`}
         >
             { text }
         </button>
