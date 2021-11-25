@@ -17,6 +17,8 @@ Refaccionaria es una solución a la medida desarrollada colaborativamente para u
 - [React DatePicker](https://reactdatepicker.com/), permite elegir fechas mediante un pequeño calendario.
 - [React Router Dom](https://v5.reactrouter.com/web/guides/quick-start) permite la funcionalidad de tener varias páginas dentro de la aplicación.
 
+Demo del proyecto en su estado actual: https://refaccionaria.netlify.app/
+
 ## Miembros del equipo 🤝
 
 - Diego López Torres
