@@ -6,9 +6,13 @@ import { toast } from 'react-toastify';
 import ProductContext from '../context/Product/ProductContext';
 import ProviderContext from '../context/Provider/ProviderContext';
 
-import Wrapper from '../components/UI/Wrapper';
 import PageContainer from '../components/UI/PageContainer';
-import Button from '../components/UI/Button';
+import ActionsContainer from '../components/UI/ActionsContainer';
+import Table from '../components/Table/Table';
+import TableHeading from '../components/Table/TableHeading';
+import TableHeadingColumn from '../components/Table/TableHeadingColumn';
+import TableActions from '../components/Table/TableActions';
+import TableDataCell from '../components/Table/TableDataCell';
 
 import { Provider } from '../types/Api';
 import { ToastAlertOptions as options } from '../data/ToastAlert';
@@ -21,7 +25,7 @@ const Providers: FC<RouteComponentProps> = props => {
     const editP = (provider: Provider) => {
         setEditingProvider(provider);
         props.history.push('/proveedores/nuevo');
-    }
+    };
 
     const deleteP = async (id: number) => {
         const confirmationResult = await Swal.fire({
@@ -35,71 +39,53 @@ const Providers: FC<RouteComponentProps> = props => {
             cancelButtonColor: 'red',
         });
 
-        if (confirmationResult.value === confirmationResult.isConfirmed) {
+        if(confirmationResult.value === confirmationResult.isConfirmed) {
             const response = await deleteProvider(id);
-            if (response.error)
+            if(response.error) {
                 toast.error(response.message, options);
-            else
+            }
+            else {
                 toast.success(response.message, options);
+            }
             fetchBrands();
         }
-    }
+    };
 
     return (
         <PageContainer>
-            <Wrapper className="max-w-5xl mt-5">
+            <ActionsContainer>
                 <Link
                     to="/proveedores/nuevo"
                     className="text-white text-center bg-green-500 hover:bg-green-700 p-3 rounded block w-full lg:w-52"
                 >Agregar proveedor nuevo</Link>
-            </Wrapper>
-            <Wrapper className="max-w-5xl mt-5 overflow-x-auto whitespace-normal lg:whitespace-nowrap">
-                <table className="w-full border-collapse lg:table-auto">
-                    <thead>
-                        <tr>
-                            <th className="p-1 border border-blue-600 lg:w-3">ID</th>
-                            <th className="p-1 border border-blue-600 lg:w-16">Nombre</th>
-                            <th className="p-1 border border-blue-600 lg:w-20">Correo</th>
-                            <th className="p-1 border border-blue-600 lg:w-12">Teléfono</th>
-                            <th className="p-1 border border-blue-600 lg:w-20">Dirección</th>
-                            <th className="p-1 border border-blue-600 lg:w-12">Empresa</th>
-                            <th className="p-1 border border-blue-600 lg:w-24">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        { providers.map((provider, index) => (
-                            <tr key={ index + provider.provider_id }>
-                                <td className="p-1 border border-blue-600">{ provider.provider_id }</td>
-                                <td className="p-1 border border-blue-600">{ provider.name }</td>
-                                <td className="p-1 border border-blue-600">{ provider.email }</td>
-                                <td className="p-1 border border-blue-600">{ provider.phone }</td>
-                                <td className="p-1 border border-blue-600">{ provider.address }</td>
-                                <td className="p-1 border border-blue-600">{ provider.enterprise }</td>
-                                <td className="p-1 border border-blue-600">
-                                    <div className="flex justify-around gap-2 lg:gap-0">
-                                        <div className="w-full md:w-28">
-                                            <Button
-                                                color="yellow"
-                                                type="button"
-                                                text="Editar"
-                                                onClick={ () => editP(provider) }
-                                            />
-                                        </div>
-                                        <div className="w-full md:w-28">
-                                            <Button
-                                                color="red"
-                                                type="button"
-                                                text="Borrar"
-                                                onClick={ () => deleteP(provider.provider_id) }
-                                            />
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        )) }
-                    </tbody>
-                </table>
-            </Wrapper>
+            </ActionsContainer>
+            <Table>
+                <TableHeading>
+                    <TableHeadingColumn className="lg:w-3">ID</TableHeadingColumn>
+                    <TableHeadingColumn className="lg:w-16">Nombre</TableHeadingColumn>
+                    <TableHeadingColumn className="lg:w-20">Correo</TableHeadingColumn>
+                    <TableHeadingColumn className="lg:w-12">Teléfono</TableHeadingColumn>
+                    <TableHeadingColumn className="lg:w-20">Dirección</TableHeadingColumn>
+                    <TableHeadingColumn className="lg:w-12">Empresa</TableHeadingColumn>
+                    <TableHeadingColumn className="lg:w-24">Acciones</TableHeadingColumn>
+                </TableHeading>
+                <tbody>
+                { providers.map((provider, index) => (
+                    <tr key={ index + provider.provider_id }>
+                        <TableDataCell> { provider.provider_id } </TableDataCell>
+                        <TableDataCell> { provider.name } </TableDataCell>
+                        <TableDataCell> { provider.email } </TableDataCell>
+                        <TableDataCell> { provider.phone } </TableDataCell>
+                        <TableDataCell> { provider.address } </TableDataCell>
+                        <TableDataCell> { provider.enterprise } </TableDataCell>
+                        <TableActions
+                            onEditClick={ () => editP(provider) }
+                            onDeleteClick={ () => deleteP(provider.provider_id) }
+                        />
+                    </tr>
+                )) }
+                </tbody>
+            </Table>
         </PageContainer>
     );
 };

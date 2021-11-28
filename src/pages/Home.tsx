@@ -7,8 +7,12 @@ import ProductContext from '../context/Product/ProductContext';
 import SaleContext from '../context/Sales/SaleContext';
 
 import PageContainer from '../components/UI/PageContainer';
-import Wrapper from '../components/UI/Wrapper';
-import Button from '../components/UI/Button';
+import ActionsContainer from '../components/UI/ActionsContainer';
+import Table from '../components/Table/Table';
+import TableHeading from '../components/Table/TableHeading';
+import TableHeadingColumn from '../components/Table/TableHeadingColumn';
+import TableActions from '../components/Table/TableActions';
+import TableDataCell from '../components/Table/TableDataCell';
 
 import { Sale } from '../types/Api';
 import { ToastAlertOptions as options } from '../data/ToastAlert';
@@ -48,7 +52,7 @@ const Home: FC<RouteComponentProps> = props => {
 
     return (
         <PageContainer>
-            <Wrapper className="flex justify-between max-w-5xl gap-2 mt-5 md:justify-start">
+            <ActionsContainer>
                 <Link
                     to="/ventas/nuevo"
                     className="block w-full p-3 text-center text-white bg-green-500 rounded hover:bg-green-700 lg:w-44"
@@ -58,52 +62,32 @@ const Home: FC<RouteComponentProps> = props => {
                     to="/ventas/resumen"
                     className="block w-full p-3 text-center text-white bg-blue-500 rounded hover:bg-blue-700 lg:w-52"
                 >Ver resumen de ventas</Link>
-            </Wrapper>
-            <Wrapper className="max-w-5xl mt-5 overflow-x-auto whitespace-nowrap md:whitespace-normal">
-                <table className="w-full border-collapse lg:table-fixed">
-                    <thead>
-                        <tr>
-                            <th className="p-1 border border-blue-600 lg:w-14">Producto</th>
-                            <th className="p-1 border border-blue-600 lg:w-14">Marca</th>
-                            <th className="p-1 border border-blue-600 lg:w-14">Cantidad</th>
-                            <th className="p-1 border border-blue-600 lg:w-14">Precio c/u</th>
-                            <th className="p-1 border border-blue-600 lg:w-14">Total</th>
-                            <th className="p-1 border border-blue-600 lg:w-28">Acciones</th>
+            </ActionsContainer>
+            <Table>
+                <TableHeading>
+                    <TableHeadingColumn className="lg:w-14">Producto</TableHeadingColumn>
+                    <TableHeadingColumn className="lg:w-14">Marca</TableHeadingColumn>
+                    <TableHeadingColumn className="lg:w-14">Cantidad</TableHeadingColumn>
+                    <TableHeadingColumn className="lg:w-14">Precio c/u</TableHeadingColumn>
+                    <TableHeadingColumn className="lg:w-14">Total</TableHeadingColumn>
+                    <TableHeadingColumn className="lg:w-28">Acciones</TableHeadingColumn>
+                </TableHeading>
+                <tbody>
+                    {sales.map(sale => (
+                        <tr key={sale.sale_id}>
+                            <TableDataCell> {sale.product.name} </TableDataCell>
+                            <TableDataCell> {sale.product.brand} </TableDataCell>
+                            <TableDataCell> {sale.amount} </TableDataCell>
+                            <TableDataCell> {sale.product.price} </TableDataCell>
+                            <TableDataCell> {sale.total} </TableDataCell>
+                            <TableActions
+                                onEditClick={ () => openEditForm(sale) }
+                                onDeleteClick={ () => deleteSaleHandler(sale.sale_id) }
+                            />
                         </tr>
-                    </thead>
-                    <tbody>
-                        { sales.map(sale => (
-                            <tr key={ sale.sale_id }>
-                                <td className="p-1 border border-blue-600">{ sale.product.name }</td>
-                                <td className="p-1 border border-blue-600">{ sale.product.brand }</td>
-                                <td className="p-1 border border-blue-600">{ sale.amount }</td>
-                                <td className="p-1 border border-blue-600">{ sale.product.price }</td>
-                                <td className="p-1 border border-blue-600">{ sale.total }</td>
-                                <td className="p-1 border border-blue-600">
-                                    <div className="flex justify-around gap-2 lg:gap-0">
-                                        <div className="w-full md:w-28">
-                                            <Button
-                                                color="yellow"
-                                                type="button"
-                                                text="Editar"
-                                                onClick={ () => openEditForm(sale) }
-                                            />
-                                        </div>
-                                        <div className="w-full md:w-28">
-                                            <Button
-                                                color="red"
-                                                type="button"
-                                                text="Borrar"
-                                                onClick={ () => deleteSaleHandler(sale.sale_id) }
-                                            />
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        )) }
-                    </tbody>
-                </table>
-            </Wrapper>
+                    ))}
+                </tbody>
+            </Table>
         </PageContainer>
     );
 };
