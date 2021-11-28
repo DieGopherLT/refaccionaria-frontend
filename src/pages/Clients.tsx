@@ -6,8 +6,12 @@ import { toast } from 'react-toastify';
 import ClientContext from '../context/Client/ClientContext';
 
 import PageContainer from '../components/UI/PageContainer';
-import Wrapper from '../components/UI/Wrapper';
-import Button from '../components/UI/Button';
+import ActionsContainer from '../components/UI/ActionsContainer';
+import Table from '../components/Table/Table';
+import TableHeading from '../components/Table/TableHeading';
+import TableHeadingColumn from '../components/Table/TableHeadingColumn';
+import TableActions from '../components/Table/TableActions';
+import TableDataCell from '../components/Table/TableDataCell';
 
 import { Client } from '../types/Api';
 import { ToastAlertOptions as options } from '../data/ToastAlert';
@@ -45,55 +49,35 @@ const Clients: FC<RouteComponentProps> = props => {
 
     return (
         <PageContainer>
-            <Wrapper className="max-w-5xl mt-5 flex justify-between md:justify-start gap-2">
+            <ActionsContainer>
                 <Link
                     to="/clientes/nuevo"
-                    className="text-white text-center bg-green-500 hover:bg-green-700 p-3 rounded block w-full lg:w-48"
+                    className="block w-full p-3 text-center text-white bg-green-500 rounded hover:bg-green-700 lg:w-48"
                 >Agregar nuevo cliente</Link>
-            </Wrapper>
-            <Wrapper className="max-w-5xl mt-5 overflow-x-auto whitespace-nowrap md:whitespace-normal">
-                <table className="w-full border-collapse lg:table-fixed ">
-                    <thead>
-                        <tr>
-                            <th className="p-1 border border-blue-600 lg:w-8">ID</th>
-                            <th className="p-1 border border-blue-600 lg:w-14">Nombre</th>
-                            <th className="p-1 border border-blue-600 lg:w-16">Dirección</th>
-                            <th className="p-1 border border-blue-600 lg:w-14">Teléfono</th>
-                            <th className="p-1 border border-blue-600 lg:w-20">Acciones</th>
+            </ActionsContainer>
+            <Table>
+                <TableHeading>
+                    <TableHeadingColumn className="lg:w-8">ID</TableHeadingColumn>
+                    <TableHeadingColumn className="lg:w-14">Nombre</TableHeadingColumn>
+                    <TableHeadingColumn className="lg:w-16">Dirección</TableHeadingColumn>
+                    <TableHeadingColumn className="lg:w-14">Teléfono</TableHeadingColumn>
+                    <TableHeadingColumn className="lg:w-20">Acciones</TableHeadingColumn>
+                </TableHeading>
+                <tbody>
+                    {clients.map((client, index) => (
+                        <tr key={`${client.client_id}${index}-${client.name}`}>
+                            <TableDataCell> { client.client_id } </TableDataCell>
+                            <TableDataCell> { client.name } </TableDataCell>
+                            <TableDataCell> { client.address } </TableDataCell>
+                            <TableDataCell> { client.phone } </TableDataCell>
+                            <TableActions 
+                                onEditClick={ () => editClientHandler(client) }
+                                onDeleteClick={ () => deleteClientHandler(client.client_id) }
+                            />
                         </tr>
-                    </thead>
-                    <tbody>
-                        { clients.map((client, index) => (
-                            <tr key={ `${client.client_id}${index}-${client.name}` }>
-                                <td className="p-1 border border-blue-600">{ client.client_id }</td>
-                                <td className="p-1 border border-blue-600">{ client.name }</td>
-                                <td className="p-1 border border-blue-600">{ client.address }</td>
-                                <td className="p-1 border border-blue-600">{ client.phone }</td>
-                                <td className="p-1 border border-blue-600">
-                                    <div className="flex justify-around gap-2 lg:gap-0">
-                                        <div className="w-full md:w-28">
-                                            <Button
-                                                color="yellow"
-                                                type="button"
-                                                text="Editar"
-                                                onClick={ () => editClientHandler(client) }
-                                            />
-                                        </div>
-                                        <div className="w-full md:w-28">
-                                            <Button
-                                                color="red"
-                                                type="button"
-                                                text="Borrar"
-                                                onClick={ () => deleteClientHandler(client.client_id) }
-                                            />
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        )) }
-                    </tbody>
-                </table>
-            </Wrapper>
+                    ))}
+                </tbody>
+            </Table>
         </PageContainer>
     );
 };

@@ -37,7 +37,7 @@ function App() {
                                 <ToastContainer/>
                                 <AppContainer>
                                     <div className="h-20 bg-blue-900 lg:h-full">
-                                        <Wrapper className="h-full">
+                                        <Wrapper className="h-full" fullWidth>
                                             <Navigation data={ navData }/>
                                         </Wrapper>
                                     </div>
