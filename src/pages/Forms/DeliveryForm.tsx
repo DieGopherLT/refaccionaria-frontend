@@ -1,5 +1,4 @@
 import React, { FC, useState, useContext, FormEvent, useEffect } from 'react';
-import DatePicker from 'react-datepicker';
 import { RouteComponentProps } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -27,12 +26,13 @@ const DeliveryForm: FC<RouteComponentProps> = props => {
     const { products } = useContext(ProductContext);
 
     const { formData, handleChange } = useForm({
-        productName: '',
+        productClassification: '',
         providerId: '',
         amount: '',
     });
 
-    const [date, setDate] = useState<any>(new Date());
+    const [category, setCategory] = useState<string>('');
+    const [orderPrice, setOrderPrice] = useState<number>(0);
 
     useEffect(() => {
         if (products.length === 0) {
@@ -45,13 +45,13 @@ const DeliveryForm: FC<RouteComponentProps> = props => {
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const productId = products.filter(product => {
-            return product.name.toLowerCase() === formData.productName.toLowerCase();
+            return product.classification.toLowerCase() === formData.productClassification.toLowerCase();
         })[0].product_id;
 
         const delivery: DeliveryDTO = {
             product_id: productId,
             provider_id: parseInt(formData.providerId),
-            delivery_date: date,
+            delivery_date: new Date(),
             amount: parseInt(formData.amount)
         }
 
@@ -67,12 +67,35 @@ const DeliveryForm: FC<RouteComponentProps> = props => {
             })
     }
 
+    const handleProductChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const productsWithClassification = products.filter(product => product.classification === event.target.value);
+        if (productsWithClassification.length === 0) {
+            setCategory('');
+            setOrderPrice(0);
+        }
+        else
+            setCategory(productsWithClassification[0].category.name);
+        handleChange(event, 'productClassification');
+    }
+
+    const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const amount = parseInt(event.target.value);
+        const productsWithSelectedProvider = products.filter(product => product.provider.provider_id.toString() === formData.providerId);
+
+        if (productsWithSelectedProvider.length === 0)
+            setOrderPrice(0)
+        else
+            setOrderPrice(amount * productsWithSelectedProvider[0].provider_price);
+
+        handleChange(event, 'amount');
+    }
+
     const productOptions: Option[] = products.map(product => {
-        const opt: Option = { value: product.name, label: product.name };
+        const opt: Option = { value: product.classification, label: product.classification };
         return opt;
     });
 
-    const providerOptions: Option[] = products.filter(product => product.name.toLowerCase() === formData.productName.toLowerCase())
+    const providerOptions: Option[] = products.filter(product => product.classification.toLowerCase() === formData.productClassification.toLowerCase())
         .map(product => {
             const opt: Option = { value: product.provider.provider_id, label: product.provider.name };
             return opt;
@@ -87,8 +110,8 @@ const DeliveryForm: FC<RouteComponentProps> = props => {
                     <div className="flex flex-col justify-between md:flex-row">
                         <Select
                             label="Producto"
-                            value={ formData.productName }
-                            onChange={ event => handleChange(event, 'productName') }
+                            value={ formData.productClassification }
+                            onChange={ handleProductChange }
                             options={ productOptions }
                         />
                         <Select
@@ -98,17 +121,10 @@ const DeliveryForm: FC<RouteComponentProps> = props => {
                             options={ providerOptions }
                         />
                     </div>
-                    <div className="flex flex-col gap-2">
-                        <label htmlFor="date">Fecha</label>
-                        <DatePicker
-                            className="w-full p-1 pl-2 border border-black rounded md:w-auto"
-                            id="date"
-                            dateFormat="dd/MM/yyyy"
-                            dateFormatCalendar="MMM yyyy"
-                            minDate={ new Date() }
-                            selected={ date }
-                            onChange={ date => setDate(date) }
-                        />
+                    <div className="w-full">
+                        <p className={ `${category ? 'block' : 'hidden'} font-bold text-lg` }>
+                            Categoria del producto: <span className="font-normal">{ category }</span>
+                        </p>
                     </div>
                     <Input
                         id="amount"
@@ -116,8 +132,13 @@ const DeliveryForm: FC<RouteComponentProps> = props => {
                         label="Cantidad"
                         placeholder="Cantidad de productos a ordenar"
                         value={ formData.amount.toString() }
-                        onChange={ event => handleChange(event, 'amount') }
+                        onChange={ handleAmountChange }
                     />
+                    <div className="w-full">
+                        <p className={ `${orderPrice ? 'block' : 'hidden'} font-bold text-lg` }>
+                            Precio de la orden: <span className="font-normal">{ orderPrice }</span>
+                        </p>
+                    </div>
                     <div className="w-full mt-5 md:flex md:justify-center">
                         <Button
                             className="md:w-44"

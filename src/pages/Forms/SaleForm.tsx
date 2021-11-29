@@ -32,7 +32,7 @@ const SaleForm: FC<RouteComponentProps> = props => {
         amount: editingSale?.amount || 0,
         client_id: editingSale?.client_id || ''
     });
-    const [price, setPrice] = useState<number>(editingSale?.product.price || 0);
+    const [price, setPrice] = useState<number>(editingSale?.product.public_price || 0);
 
     useEffect(() => {
         if (products.length === 0 || clients.length === 0) {
@@ -91,14 +91,14 @@ const SaleForm: FC<RouteComponentProps> = props => {
     const handleProductChange = (event: ChangeEvent<HTMLSelectElement>) => {
         const { target: { value } } = event;
         if (value !== '') {
-            const productPrice = products.filter(product => product.product_id.toString() === value)[0].price;
+            const productPrice = products.filter(product => product.product_id.toString() === value)[0].public_price;
             setPrice(productPrice);
         }
         handleChange(event, 'product_id');
     }
 
     const productOptions: Option[] = products.map(product => {
-        return { value: product.product_id, label: product.name }
+        return { value: product.product_id, label: product.classification }
     });
 
     const clientOpcions: Option[] = clients.map(client => {

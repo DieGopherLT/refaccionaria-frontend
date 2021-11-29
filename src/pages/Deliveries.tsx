@@ -35,12 +35,13 @@ const Deliveries: FC<RouteComponentProps> = props => {
             <ActionsContainer>
                 <Link
                     to="/entregas/nuevo"
-                    className="text-white text-center bg-green-500 hover:bg-green-700 p-3 rounded block w-full lg:w-52"
+                    className="block w-full p-3 text-center text-white bg-green-500 rounded hover:bg-green-700 lg:w-52"
                 >Hacer una nueva orden</Link>
             </ActionsContainer>
             <Table>
                 <TableHeading>
-                    <TableHeadingColumn className="lg:w-16">Nombre</TableHeadingColumn>
+                    <TableHeadingColumn className="lg:w-16">Categoria</TableHeadingColumn>
+                    <TableHeadingColumn className="lg:w-16">Clasificación</TableHeadingColumn>
                     <TableHeadingColumn className="lg:w-16">Marca</TableHeadingColumn>
                     <TableHeadingColumn className="lg:w-12">Proveedor</TableHeadingColumn>
                     <TableHeadingColumn className="lg:w-24">Correo</TableHeadingColumn>
@@ -51,7 +52,8 @@ const Deliveries: FC<RouteComponentProps> = props => {
                 <tbody>
                 { deliveries.map((delivery, index) => (
                     <tr key={ index }>
-                        <TableDataCell> { delivery.product.name } </TableDataCell>
+                        <TableDataCell> { delivery.product.category.name } </TableDataCell>
+                        <TableDataCell> { delivery.product.classification } </TableDataCell>
                         <TableDataCell> { delivery.product.brand } </TableDataCell>
                         <TableDataCell> { delivery.provider.name } </TableDataCell>
                         <TableDataCell> { delivery.provider.email } </TableDataCell>

@@ -28,11 +28,11 @@ const ProductForm: FC<RouteComponentProps> = props => {
     const { providers } = useContext(ProviderContext);
 
     const { formData, handleChange } = useForm<ProductDTO>({
-        name: editingProduct?.name || '',
+        classification: editingProduct?.classification || '',
         brand: editingProduct?.brand || '',
-        price: editingProduct?.price || 0,
+        public_price: editingProduct?.public_price || 0,
+        provider_price: editingProduct?.provider_price || 0,
         amount: editingProduct?.amount || 0,
-        description: editingProduct?.description || '',
         category_id: editingProduct?.category.category_id || 0,
         provider_id: editingProduct?.provider.provider_id || 0,
     });
@@ -57,7 +57,8 @@ const ProductForm: FC<RouteComponentProps> = props => {
 
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        formData.price = parseFloat(formData.price.toString());
+        formData.public_price = parseFloat(formData.public_price.toString());
+        formData.provider_price = parseFloat(formData.provider_price.toString());
         formData.amount = parseInt(formData.amount.toString());
         formData.category_id = parseInt(formData.category_id.toString());
         formData.provider_id = parseInt(formData.provider_id.toString())
@@ -72,8 +73,11 @@ const ProductForm: FC<RouteComponentProps> = props => {
             case isNaN(formData.category_id):
                 toast.warning('Agregue una categoría', options);
                 return;
-            case formData.price === 0 || formData.price.toString() === '':
-                toast.warning('Agregue un precio mayor a cero', options);
+            case formData.public_price === 0 || formData.public_price.toString() === '':
+                toast.warning('Agregue un precio al público mayor a cero', options);
+                return;
+            case formData.provider_price === 0 || formData.provider_price.toString() === '':
+                toast.warning('Agrege un precio de proveedor mayor a cero', options);
                 return;
         }
 
@@ -134,9 +138,9 @@ const ProductForm: FC<RouteComponentProps> = props => {
                         type="text"
                         label="Nombre"
                         id="name"
-                        placeholder="Nombre del producto"
-                        value={ formData.name }
-                        onChange={ event => handleChange(event, 'name') }
+                        placeholder="Clasificación del producto"
+                        value={ formData.classification }
+                        onChange={ event => handleChange(event, 'classification') }
                     />
                     <Select
                         label="Categoria"
@@ -160,11 +164,19 @@ const ProductForm: FC<RouteComponentProps> = props => {
                     </div>
                     <Input
                         type="number"
-                        label="Precio"
+                        label="Precio al público"
                         id="price"
                         placeholder="Precio del producto"
-                        value={ formData.price.toString() }
-                        onChange={ event => handleChange(event, 'price') }
+                        value={ formData.public_price.toString() }
+                        onChange={ event => handleChange(event, 'public_price') }
+                    />
+                    <Input
+                        type="number"
+                        label="Precio del proveedor"
+                        id="price"
+                        placeholder="Precio del producto"
+                        value={ formData.provider_price.toString() }
+                        onChange={ event => handleChange(event, 'provider_price') }
                     />
                     { editingProduct === null &&
                         <Input
@@ -176,17 +188,6 @@ const ProductForm: FC<RouteComponentProps> = props => {
                             onChange={ event => handleChange(event, 'amount') }
                         />
                     }
-                    <div className="flex flex-col">
-                        <label htmlFor="description">Descripción</label>
-                        <textarea
-                            name="description"
-                            id="description"
-                            placeholder="Descripcion del producto"
-                            className="w-full p-2 my-2 border border-black"
-                            value={ formData.description }
-                            onChange={ event => handleChange(event, 'description') }
-                        />
-                    </div>
                     <div className="w-full md:flex md:justify-center">
                         <Button
                             className="md:w-44"

@@ -56,25 +56,27 @@ const Products: FC<ProductsProps> = props => {
             <ActionsContainer>
                 <Link
                     to="/productos/nuevo"
-                    className="text-white text-center bg-green-500 hover:bg-green-700 p-3 rounded block w-full lg:w-48"
+                    className="block w-full p-3 text-center text-white bg-green-500 rounded hover:bg-green-700 lg:w-48"
                 >Crear producto nuevo</Link>
             </ActionsContainer>
             <Table>
                 <TableHeading>
                     <TableHeadingColumn className="lg:w-9">ID</TableHeadingColumn>
-                    <TableHeadingColumn className="lg:w-12">Nombre</TableHeadingColumn>
-                    <TableHeadingColumn className="lg:w-32">Descripcion</TableHeadingColumn>
+                    <TableHeadingColumn className="lg:w-12">Categoría</TableHeadingColumn>
+                    <TableHeadingColumn className="lg:w-32">Clasificación</TableHeadingColumn>
                     <TableHeadingColumn className="lg:w-8">Precio</TableHeadingColumn>
+                    <TableHeadingColumn className="lg:w-8">Precio proveedor</TableHeadingColumn>
                     <TableHeadingColumn className="lg:w-8">Cantidad</TableHeadingColumn>
                     <TableHeadingColumn className="lg:w-28">Acciones</TableHeadingColumn>
                 </TableHeading>
                 <tbody>
                 { products.map(product => (
-                    <tr key={ `${ product.product_id }-${ product.name }` }>
+                    <tr key={ `${ product.product_id }-${ product.classification }` }>
                         <TableDataCell> { product.product_id } </TableDataCell>
-                        <TableDataCell> { product.name } </TableDataCell>
-                        <TableDataCell> { product.description } </TableDataCell>
-                        <TableDataCell> { product.price } </TableDataCell>
+                        <TableDataCell> { product.category.name } </TableDataCell>
+                        <TableDataCell> { product.classification } </TableDataCell>
+                        <TableDataCell> { product.public_price } </TableDataCell>
+                        <TableDataCell> { product.provider_price } </TableDataCell>
                         <TableDataCell> { product.amount || 0 } </TableDataCell>
                         <TableActions
                             onEditClick={ () => editProduct(product) }

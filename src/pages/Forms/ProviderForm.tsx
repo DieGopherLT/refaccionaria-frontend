@@ -30,7 +30,6 @@ const ProviderForm: FC<RouteComponentProps> = props => {
         phone: editingProvider?.phone || '',
         enterprise: editingProvider?.enterprise || '',
         address: editingProvider?.address || '',
-        provider_price: editingProvider?.provider_price || 0
     });
 
     useEffect(() => {
@@ -44,8 +43,6 @@ const ProviderForm: FC<RouteComponentProps> = props => {
 
     const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
-        formData.provider_price = parseInt(formData.provider_price.toString());
 
         if (editingProvider === null) {
             postProvider(formData)
@@ -120,14 +117,6 @@ const ProviderForm: FC<RouteComponentProps> = props => {
                         placeholder="Empresa del proveedor"
                         value={ formData.enterprise }
                         onChange={ event => handleChange(event, 'enterprise') }
-                    />
-                    <Input
-                        type="number"
-                        label="Precio"
-                        id="price"
-                        placeholder="Precio de sus productos"
-                        value={ formData.provider_price.toString() }
-                        onChange={ event => handleChange(event, 'provider_price') }
                     />
                     <div className="w-full md:flex md:justify-center">
                         <Button
