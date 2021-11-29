@@ -164,19 +164,19 @@ const ProductForm: FC<RouteComponentProps> = props => {
                     </div>
                     <Input
                         type="number"
-                        label="Precio al público"
+                        label="Precio del proveedor"
                         id="price"
-                        placeholder="Precio del producto"
-                        value={ formData.public_price.toString() }
-                        onChange={ event => handleChange(event, 'public_price') }
+                        placeholder="Precio por unidad por el cual es comprado al proveedor"
+                        value={ formData.provider_price.toString() }
+                        onChange={ event => handleChange(event, 'provider_price') }
                     />
                     <Input
                         type="number"
-                        label="Precio del proveedor"
+                        label="Precio al público"
                         id="price"
-                        placeholder="Precio del producto"
-                        value={ formData.provider_price.toString() }
-                        onChange={ event => handleChange(event, 'provider_price') }
+                        placeholder="Precio del producto por el cual es vendido al público"
+                        value={ formData.public_price.toString() }
+                        onChange={ event => handleChange(event, 'public_price') }
                     />
                     { editingProduct === null &&
                         <Input
