@@ -1,7 +1,7 @@
 import { NavigationItemData } from '../interfaces/Navigation';
 
 import {
-    FaHome,
+    FaDollarSign,
     FaShoppingCart,
     FaTruckLoading,
     FaTruckMoving,
@@ -15,8 +15,8 @@ const props = {
 export const navData: NavigationItemData[] = [
     {
         href: '/',
-        label: 'Inicio',
-        Icon: FaHome,
+        label: 'Ventas',
+        Icon: FaDollarSign,
         props
     },
     {

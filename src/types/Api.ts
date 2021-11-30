@@ -39,22 +39,22 @@ export interface CategoryResponse {
 }
 
 export interface ProductDTO {
-    name: string;
+    classification: string;
     brand: string;
-    price: number;
+    public_price: number;
+    provider_price: number;
     amount: number;
-    description: string;
     category_id: number;
     provider_id: number;
 }
 
 export interface Product {
     product_id: number;
-    name: string;
+    classification: string;
     brand: string;
-    price: number;
+    public_price: number;
+    provider_price: number;
     amount: number;
-    description: string;
     category: Category;
     provider: Provider;
 }
@@ -70,7 +70,6 @@ export interface ProviderDTO {
     phone: string;
     enterprise: string;
     address: string;
-    provider_price: number;
 }
 
 export interface Provider extends ProviderDTO{

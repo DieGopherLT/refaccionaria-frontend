@@ -75,10 +75,10 @@ const Home: FC<RouteComponentProps> = props => {
                 <tbody>
                     {sales.map(sale => (
                         <tr key={sale.sale_id}>
-                            <TableDataCell> {sale.product.name} </TableDataCell>
+                            <TableDataCell> {sale.product.classification} </TableDataCell>
                             <TableDataCell> {sale.product.brand} </TableDataCell>
                             <TableDataCell> {sale.amount} </TableDataCell>
-                            <TableDataCell> {sale.product.price} </TableDataCell>
+                            <TableDataCell> {sale.product.public_price} </TableDataCell>
                             <TableDataCell> {sale.total} </TableDataCell>
                             <TableActions
                                 onEditClick={ () => openEditForm(sale) }
